@@ -13,6 +13,7 @@ module App
 
     # for rspec
     # Setting it to false will prevent unnecessary test files from being created.
+    config.i18n.default_locale = :ja
     config.generators do |g|
       g.test_framework :rspec, 
             view_specs: false, 

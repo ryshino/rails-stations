@@ -1,0 +1,29 @@
+<%= form_with model: @movie  do |f| %>
+<%= render 'layouts/error_messages', model: f.object %>
+  <div>
+    <%= f.label :name, '映画タイトル' %>
+    <%= f.text_field :name %>
+  </div>
+  
+  <div>
+    <%= f.label :year, '公開年' %>
+    <%= f.text_field :year %>
+  </div>
+
+  <div>
+    <%= f.label :is_showing, '上映中か' %>
+    <%= f.select :is_showing, [["上映中", "1"], ["上映予定", "0"]] %>
+  </div>
+
+   <div>
+    <%= f.label :description, '概要' %>
+    <%= f.text_area :description %>
+  </div>
+
+  <div>
+    <%= f.label :image_url, '画像URL' %>
+    <%= f.file_field :image_url %>
+  </div>
+
+  <%= f.submit '投稿' %>
+<% end %>

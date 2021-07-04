@@ -17,7 +17,7 @@
         <td><%= movie.id %></td>
         <td><%= movie.name %></td>
         <td><%= movie.year %></td>
-        <td><%= movie.description %></td>
+        <td><%= safe_join(movie.description.split("\n"),tag(:br)) %></td>
         <td><img src="<%= movie.image_url %>"></td>
         <% if movie.is_showing %>
           <td>上映中</td>
