@@ -1,5 +1,7 @@
 <%= form_with model: @movie  do |f| %>
 <%= render 'layouts/error_messages', model: f.object %>
+<%= render 'layouts/flash_messages' %>
+
   <div>
     <%= f.label :name, '映画タイトル' %>
     <%= f.text_field :name %>
