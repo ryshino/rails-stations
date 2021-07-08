@@ -31,3 +31,7 @@
 
   <%= f.submit '更新' %>
 <% end %>
+
+<%= link_to movie_path(@movie), method: :delete, data: {confirm: "本当に削除してよろしいですか？"} do %>
+  この写真を削除する
+<% end %>

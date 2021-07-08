@@ -39,6 +39,14 @@ class MoviesController < ApplicationController
     end
   end
 
+  def destroy
+    @movie = Movie.find(params[:id])
+
+    @movie.destroy
+    flash[:notice] = '投稿を削除しました'
+    redirect_to movies_path
+  end
+
   private
   
   def movie_params
