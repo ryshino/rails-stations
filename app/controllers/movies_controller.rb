@@ -21,11 +21,28 @@ class MoviesController < ApplicationController
       render :new
     end
   end
-  
+
+  # /admin/movies/:id/edit
+  def edit
+    @movie = Movie.find(params[:id])    
+  end
+
+  def update
+    @movie = Movie.find(params[:id])
+
+    if @movie.update(movie_params) 
+      flash[:notice] = "登録内容を更新しました"
+      redirect_to movies_path
+    else
+      flash.now[:alert] = '更新に失敗しました'
+      render :edit
+    end
+  end
 
   private
   
   def movie_params
-    params.require(:movie).permit(:name, :year, :is_showing, :description, :image_url)
+    params[:movie].permit(:id, :name, :year, :is_showing, :description, :image_url)
   end
+
 end

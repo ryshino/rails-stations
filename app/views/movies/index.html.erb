@@ -14,15 +14,15 @@
   <tbody>
     <tr>
       <% @movies.each do |movie| %>
-        <td><%= movie.id %></td>
+        <td><%= link_to movie.id, edit_movie_path(movie) %></td>
         <td><%= movie.name %></td>
         <td><%= movie.year %></td>
         <td><%= safe_join(movie.description.split("\n"),tag(:br)) %></td>
         <td><img src="<%= movie.image_url %>"></td>
-        <% if movie.is_showing %>
+        <% if movie.is_showing == true %>
           <td>上映中</td>
         <% else %>
-          <td>上映予定</td>
+          <td>公開予定</td>
         <% end %>
         <td><%= movie.created_at %></td>
         <td><%= movie.updated_at %></td>

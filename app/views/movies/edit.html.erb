@@ -1,4 +1,4 @@
-<h1>Movies New</h1>
+<h1>Movies Changes</h1>
 
 <%= form_with model: @movie  do |f| %>
 <%= render 'layouts/error_messages', model: f.object %>
@@ -29,5 +29,5 @@
     <%= f.file_field :image_url %>
   </div>
 
-  <%= f.submit '投稿' %>
+  <%= f.submit '更新' %>
 <% end %>
