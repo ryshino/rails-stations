@@ -1,3 +1,20 @@
+<%= form_with(scope: :search, url:movies_path, method: :get, local: true) do |f| %>
+
+  <%= f.label :keyword %>
+  <%= f.text_field :keyword, value: @search_params[:keyword] %>
+
+  <%= f.submit 'Search' %>
+
+  <%= f.label :is_showing, '上映中', value: 1 %>
+  <%= f.radio_button :is_showing, 1 %>
+
+  <%= f.label :is_showing, '公開予定', value: 0 %>
+  <%= f.radio_button :is_showing, 0 %>
+
+  <%= f.label :is_showing, 'すべて' %>
+  <%= f.radio_button :is_showing, '' %>
+<% end %>
+
 <table>
   <thead>
     <tr>
