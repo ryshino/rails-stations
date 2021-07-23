@@ -3,12 +3,21 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /admin/movies
   def index
-    if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
-      @q = Movie.ransack(search_params, activated_true: true)
+    t = Movie.arel_table
+    name = params[:name]
+    description = params[:description]
+    @movies = Movie.all
+    @movies = @movies.where(t[:name].matches("%#{name}%")) if name.present?
+    @movies = @movies.where(t[:description].matches("%#{description}%")) if description.present?
+
+    case params[:is_showing]
+    when nil
+      @movies
+    when ""
+      @movies
     else
-      @q = Movie.ransack(activated_true: true)
+      @movies = @movies.where(is_showing: params[:is_showing])
     end
-    @movies = @q.result
   end
 
   #GET /admin/movies/new
@@ -57,9 +66,5 @@ class MoviesController < ApplicationController
   
   def movie_params
     params[:movie].permit(:id, :name, :year, :is_showing, :description, :image_url)
-  end
-  
-  def search_params
-    params.require(:q).permit(:name_or_description_cont, :is_showing_eq)
   end
 end
