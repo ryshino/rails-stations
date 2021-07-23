@@ -1,10 +1,14 @@
 class MoviesController < ApplicationController
-  before_action :set_q, only: [:index, :search]
 
   # GET /movies
   # GET /admin/movies
   def index
-    @movies = Movie.all
+    if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
+      @q = Movie.ransack(search_params, activated_true: true)
+    else
+      @q = Movie.ransack(activated_true: true)
+    end
+    @movies = @q.result
   end
 
   #GET /admin/movies/new
@@ -49,19 +53,13 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
-  def search
-    @movies = @q.result
-    render :index
-  end
-
   private
   
   def movie_params
     params[:movie].permit(:id, :name, :year, :is_showing, :description, :image_url)
   end
   
-  def set_q
-    @q = Movie.ransack(params[:q])
+  def search_params
+    params.require(:q).permit(:name_or_description_cont, :is_showing_eq)
   end
-
 end

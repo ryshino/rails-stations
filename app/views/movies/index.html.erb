@@ -1,6 +1,6 @@
-<%= search_form_for @q, url: search_movies_path do |f| %>
-  <%= f.label :name_or_description_eq, "キーワード" %>
-  <%= f.search_field :name_or_description_eq %>
+<%= search_form_for @q, url: movies_path do |f| %>
+  <%= f.label :name_or_description_cont, "キーワード" %>
+  <%= f.search_field :name_or_description_cont %>
 
   <%= f.submit '検索' %>
 
@@ -23,8 +23,8 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <% @movies.each do |movie| %>
+    <% @movies.each do |movie| %>
+      <tr>
         <td><%= link_to movie.id, edit_movie_path(movie) %></td>
         <td><%= movie.name %></td>
         <td><%= movie.year %></td>
@@ -37,7 +37,7 @@
         <% end %>
         <td><%= movie.created_at %></td>
         <td><%= movie.updated_at %></td>
-      <% end %>
-    </tr>
+      </tr>
+    <% end %>
   </tbody>
 </table>
