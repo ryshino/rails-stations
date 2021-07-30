@@ -1,0 +1,12 @@
+<table class="row">
+    <tr>
+      <th class="header1">1</th>
+      <th class="header2">2</th>
+      <th class="header2">3</th>
+      <th class="header2">4</th>
+      <th class="header2">5</th>
+      <% @sheets.each do |sheet| %>
+          <td><%= sheet.column %></td>　
+      <% end %>
+    </tr>
+</table>
