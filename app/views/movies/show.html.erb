@@ -1,0 +1,17 @@
+<%= link_to @movie.id, edit_movie_path(@movie) %>
+<%= @movie.name %>
+<%= @movie.year %>
+<%= safe_join(@movie.description.split("\n"),tag(:br)) %>
+<img src="<%= @movie.image_url %>">
+<% if @movie.is_showing == true %>
+  上映中
+<% else %>
+  公開予定
+<% end %>
+<%= @movie.created_at %>
+<%= @movie.updated_at %>
+
+<% @movie.schedules.each do |schedule| %>
+  <%= schedule.start_time %>
+  <%= schedule.end_time %>
+<% end %>

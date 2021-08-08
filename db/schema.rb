@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_25_010043) do
+ActiveRecord::Schema.define(version: 2021_08_08_053548) do
 
   create_table "movies", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 160, null: false, comment: "æ˜ ç”»ã\u0081®ã‚¿ã‚¤ãƒˆãƒ«ã€‚é‚¦é¡Œãƒ»æ´‹é¡Œã\u0081¯ä¸€æ—¦è€ƒã\u0081ˆã\u0081ªã\u0081\u008Fã\u0081¦OK"
@@ -23,6 +23,15 @@ ActiveRecord::Schema.define(version: 2021_07_25_010043) do
     t.index ["name"], name: "name_UNIQUE", unique: true
   end
 
+  create_table "schedules", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.time "start_time"
+    t.time "end_time"
+    t.integer "movie_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["movie_id"], name: "fk_rails_0a59223267"
+  end
+
   create_table "sheets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "column", null: false
     t.string "row", limit: 1, null: false
@@ -30,4 +39,5 @@ ActiveRecord::Schema.define(version: 2021_07_25_010043) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "schedules", "movies"
 end
