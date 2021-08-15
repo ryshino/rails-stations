@@ -12,3 +12,6 @@ ja:
         is_showing: 上映中
         created_at: 登録日時
         updated_at: 更新日時
+  time:
+    formats:
+      default: "%Y年%m月%d日 %H時%M分"

@@ -21,6 +21,8 @@
       <th class="header2">概要</th>
       <th class="header2">画像URL</th>
       <th class="header2">上映中</th>
+      <th class="header2">映画開始時刻</th>
+      <th class="header2">映画終了時刻</th>
       <th class="header2">登録日時</th>
       <th class="header2">更新日時</th>
     </tr>
@@ -38,9 +40,15 @@
         <% else %>
           <td>公開予定</td>
         <% end %>
-        <td><%= movie.created_at %></td>
-        <td><%= movie.updated_at %></td>
+        <% movie.schedules.each do |schedule| %>
+          <td><%= schedule.start_time.to_s %></td>
+          <td><%= schedule.end_time.to_s %></td>
+        <% end %>
+        <td><%= l movie.created_at %></td>
+        <td><%= l movie.updated_at %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<%= link_to "新規作成", new_movie_path %>

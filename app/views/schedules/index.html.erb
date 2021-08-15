@@ -1,0 +1,28 @@
+<table>
+  <thead>
+    <tr>
+      <th class="header1">ID</th>
+      <th class="header2">映画タイトル</th>
+      <th class="header2">作品ID</th>
+      <th class="header2">映画開始時刻</th>
+      <th class="header2">映画終了時刻</th>
+      <th class="header2">作成日時</th>
+      <th class="header2">更新日時</th>
+      <th class="header2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @schedules.each do |schedule| %>
+      <tr>
+        <td><%= schedule.id %></td>
+        <td><%= schedule.movie.name %></td>
+        <td><%= schedule.movie_id %></td>
+        <td><%= l schedule.start_time %></td>
+        <td><%= l schedule.end_time %></td>
+        <td><%= l schedule.created_at %></td>
+        <td><%= l schedule.updated_at %></td>
+        <td><%= link_to "編集", edit_schedule_path(schedule)%><td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

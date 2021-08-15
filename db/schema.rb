@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_08_053548) do
+ActiveRecord::Schema.define(version: 2021_08_15_014507) do
 
   create_table "movies", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 160, null: false, comment: "æ˜ ç”»ã\u0081®ã‚¿ã‚¤ãƒˆãƒ«ã€‚é‚¦é¡Œãƒ»æ´‹é¡Œã\u0081¯ä¸€æ—¦è€ƒã\u0081ˆã\u0081ªã\u0081\u008Fã\u0081¦OK"
@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 2021_08_08_053548) do
   end
 
   create_table "schedules", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.time "start_time"
-    t.time "end_time"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.integer "movie_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

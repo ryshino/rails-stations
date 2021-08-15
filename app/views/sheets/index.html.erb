@@ -1,12 +1,18 @@
 <table class="row">
+  <thead>
     <tr>
       <th class="header1">1</th>
       <th class="header2">2</th>
       <th class="header2">3</th>
       <th class="header2">4</th>
       <th class="header2">5</th>
-      <% @sheets.each do |sheet| %>
-          <td><%= sheet.column %></td>　
-      <% end %>
     </tr>
+  </thead>
+  <tbody>
+    <% @sheets.each do |sheet| %>
+      <tr>
+        <td><%= sheet.column %></td>　
+      </tr>
+    <% end %>
+  </tbody>
 </table>

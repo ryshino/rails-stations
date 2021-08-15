@@ -8,10 +8,10 @@
 <% else %>
   公開予定
 <% end %>
-<%= @movie.created_at %>
-<%= @movie.updated_at %>
+<%= l @movie.created_at %>
+<%= l @movie.updated_at %>
 
 <% @movie.schedules.each do |schedule| %>
-  <%= schedule.start_time %>
-  <%= schedule.end_time %>
+  <%= l schedule.start_time %>
+  <%= l schedule.end_time %>
 <% end %>
