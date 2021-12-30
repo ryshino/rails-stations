@@ -4,6 +4,7 @@ class SheetsController < ApplicationController
     @movie = Movie.find(params[:movie_id])
     @schedule = Schedule.find(params[:schedule_id])
     @date = params[:date]
+    @reservations = Reservation.all
   end
 
   

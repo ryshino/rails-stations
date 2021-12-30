@@ -29,3 +29,6 @@ table.row {
 
 }
 
+table td.already_reservation {
+  background-color: darkgray;
+}

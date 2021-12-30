@@ -10,13 +10,18 @@
   </thead>
   <tbody>
     <% @sheets.each do |sheet| %>
-      <tr>
-        <td>
-          <%= link_to new_movie_schedule_reservation_path(@movie, @schedule, date: @date, sheet_id: sheet.id) do %>
-            <%= sheet.column %>
-          <% end %>
-          </td>
-      </tr>
+      <% if check_reservation(@reservations, sheet, @schedule, @date) %>
+        <td class="already_reservation">
+          <%= sheet.column %>
+        </td>
+      <% else %>
+      <td>
+        <%= link_to new_movie_schedule_reservation_path(@movie, @schedule, date: @date, sheet_id: sheet.id) do %>
+          <%= sheet.column %>
+        <% end %>
+      </td>
+      <% end %>
     <% end %>
+    </tr>
   </tbody>
 </table>

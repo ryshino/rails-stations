@@ -1,13 +1,13 @@
 class ReservationsController < ApplicationController
   def new
-    if new?
+    if reservation_parameter?
       flash[:alert] = '日時と座席を選択してください'
       redirect_to movies_path
     else
       @reservation = Reservation.new
       @movie = Movie.find(params[:movie_id])
       @sheet = Sheet.find(params[:sheet_id])
-      @schedule = Schedule.find(params[:schedule_id])
+      @schedule = params[:schedule_id]
       @date = params[:date]
     end
   end
@@ -32,7 +32,7 @@ class ReservationsController < ApplicationController
     params.require(:reservation).permit(:date, :schedule_id, :sheet_id, :email, :name)
   end
 
-  def new?
+  def reservation_parameter?
     params[:date].blank?
     params[:sheet_id].blank?
   end
