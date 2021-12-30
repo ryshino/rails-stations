@@ -1,4 +1,4 @@
-class SchedulesController < ApplicationController
+class Admin::SchedulesController < ApplicationController
   def index
     @schedules = Schedule.includes(:movie)
   end
@@ -12,7 +12,7 @@ class SchedulesController < ApplicationController
 
     if @schedule.save
       flash[:notice] = '作成に成功しました'
-      redirect_to schedules_path
+      redirect_to admin_schedules_path
     else
       flash.now[:alert] = '作成に失敗しました'
       render :new
@@ -28,7 +28,7 @@ class SchedulesController < ApplicationController
 
     if @schedule.update(schedule_params) 
       flash[:notice] = "登録内容を更新しました"
-      redirect_to schedules_path
+      redirect_to admin_schedules_path
     else
       flash.now[:alert] = '更新に失敗しました'
       render :edit
@@ -40,7 +40,7 @@ class SchedulesController < ApplicationController
 
     @schedule.destroy
     flash[:notice] = '投稿を削除しました'
-    redirect_to schedules_path
+    redirect_to admin_schedules_path
   end
 
 

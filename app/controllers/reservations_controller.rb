@@ -1,0 +1,39 @@
+class ReservationsController < ApplicationController
+  def new
+    if new?
+      flash[:alert] = '日時と座席を選択してください'
+      redirect_to movies_path
+    else
+      @reservation = Reservation.new
+      @movie = Movie.find(params[:movie_id])
+      @sheet = Sheet.find(params[:sheet_id])
+      @schedule = Schedule.find(params[:schedule_id])
+      @date = params[:date]
+    end
+  end
+
+  def create
+    @reservation = Reservation.new(reservation_params)
+    @schedule = Schedule.find_by(id: @reservation.schedule_id)
+    @movie = Movie.find_by(id: @schedule.movie_id)
+
+    if @reservation.save
+      flash[:notice] = '予約が完了しました'
+      redirect_to movie_path(@movie)
+    else
+      flash[:alert] = '予約に失敗しました'
+      redirect_to movie_schedule_sheets_path(@movie, @schedule, date: @reservation.date)
+    end
+  end
+
+  private
+
+  def reservation_params
+    params.require(:reservation).permit(:date, :schedule_id, :sheet_id, :email, :name)
+  end
+
+  def new?
+    params[:date].blank?
+    params[:sheet_id].blank?
+  end
+end

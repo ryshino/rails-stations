@@ -1,5 +1,16 @@
 Rails.application.routes.draw do
-  resources :movies, path: '/admin/movies'
-  resources :schedules, path: '/admin/schedules'
-  resources :sheets
+
+  resources :movies do
+    resources :schedules do
+      resources :sheets, only: [:index]
+      resources :reservations, only: [:new]
+    end
+  end
+
+  post 'reservations/', to: 'reservations#create'
+
+  namespace :admin do
+    resources :movies
+    resources :schedules
+  end
 end

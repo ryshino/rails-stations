@@ -1,0 +1,36 @@
+<%= form_with model: @reservation, local: true do |f| %>
+<%= render 'layouts/error_messages', model: f.object %>
+
+  <div>
+    <%= f.label :movie_id, "選択中の映画【#{@movie.name}】" %>
+    <%= f.hidden_field :movie_id, :value => @movie.id %>
+  </div>
+  
+  <div>
+    <%= f.label :date, "選択中の日時【#{@date}】" %>
+    <%= f.hidden_field :date, :value => @date %>
+  </div>
+
+  <div>
+    <%= f.label :sheet_id, "選択中のsheet_id【#{@sheet.id}】" %>
+    <%= f.hidden_field :sheet_id, :value => @sheet.id %>
+  </div>
+
+  <div>
+    <%= f.label :schedule_id, "選択中のschedule_id【#{@schedule.id}】" %>
+    <%= f.hidden_field :schedule_id, :value => @schedule.id %>
+  </div>
+  
+  <div>
+    <%= f.label :name, '予約者氏名' %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :email, 'メールアドレス' %>
+    <%= f.email_field :email %>
+  </div>
+
+
+  <%= f.submit '投稿' %>
+<% end %> 

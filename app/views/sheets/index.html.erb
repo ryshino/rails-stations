@@ -11,7 +11,11 @@
   <tbody>
     <% @sheets.each do |sheet| %>
       <tr>
-        <td><%= sheet.column %></td>　
+        <td>
+          <%= link_to new_movie_schedule_reservation_path(@movie, @schedule, date: @date, sheet_id: sheet.id) do %>
+            <%= sheet.column %>
+          <% end %>
+          </td>
       </tr>
     <% end %>
   </tbody>
