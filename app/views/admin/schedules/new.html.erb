@@ -1,7 +1,8 @@
-<h1>スケジュール編集</h1>
+<h1>スケジュール作成</h1>
 
-<%= form_with model: @schedule  do |f| %>
+<%= form_with model: [:admin, @schedule], local: true do |f| %>
 <%= render 'layouts/error_messages', model: f.object %>
+<%= render 'layouts/flash_messages' %>
 
   <div>
     <%= f.label :movie_id, '映画ID' %>
@@ -22,6 +23,4 @@
   <%= f.submit '作成' %>
 <% end %>
 
-<%= link_to schedule_path(@schedule), method: :delete, data: {confirm: "本当に削除してよろしいですか？"} do %>
-  この写真を削除する
-<% end %>
+<%= link_to "一覧画面へ戻る", admin_schedules_path %>

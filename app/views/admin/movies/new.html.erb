@@ -1,14 +1,11 @@
-<h1>Movies Changes</h1>
-
-<%= form_with model: @movie  do |f| %>
+<%= form_with model: [:admin, @movie], local: true do |f| %>
 <%= render 'layouts/error_messages', model: f.object %>
-<%= render 'layouts/flash_messages' %>
 
   <div>
     <%= f.label :name, '映画タイトル' %>
     <%= f.text_field :name %>
   </div>
-  
+
   <div>
     <%= f.label :year, '公開年' %>
     <%= f.text_field :year %>
@@ -29,9 +26,5 @@
     <%= f.file_field :image_url %>
   </div>
 
-  <%= f.submit '更新' %>
-<% end %>
-
-<%= link_to movie_path(@movie), method: :delete, data: {confirm: "本当に削除してよろしいですか？"} do %>
-  この写真を削除する
-<% end %>
+  <%= f.submit '投稿' %>
+<% end %> 

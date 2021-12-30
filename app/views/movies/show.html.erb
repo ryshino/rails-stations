@@ -1,17 +1,56 @@
-<%= link_to @movie.id, edit_movie_path(@movie) %>
-<%= @movie.name %>
-<%= @movie.year %>
-<%= safe_join(@movie.description.split("\n"),tag(:br)) %>
-<img src="<%= @movie.image_url %>">
-<% if @movie.is_showing == true %>
-  上映中
-<% else %>
-  公開予定
-<% end %>
-<%= l @movie.created_at %>
-<%= l @movie.updated_at %>
+<table>
+  <thead>
+    <tr>
+      <th class="header1">ID</th>
+      <th class="header2">タイトル</th>
+      <th class="header2">公開年</th>
+      <th class="header2">概要</th>
+      <th class="header2">画像URL</th>
+      <th class="header2">上映中</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @movie.id %></td>
+      <td><%= @movie.name %></td>
+      <td><%= @movie.year %></td>
+      <td><%= safe_join(@movie.description.split("\n"),tag(:br)) %></td>
+      <td><img src="<%= @movie.image_url %>"></td>
+      <% if @movie.is_showing == true %>
+        <td>上映中</td>
+      <% else %>
+        <td>公開予定</td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
 
-<% @movie.schedules.each do |schedule| %>
-  <%= l schedule.start_time %>
-  <%= l schedule.end_time %>
+<table>
+  <thead>
+    <tr>
+      <th class="header2">ID</th>
+      <th class="header2">映画開始時刻</th>
+      <th class="header2">映画終了時刻</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @schedules.each do |schedule| %>
+      <tr>
+        <td><%= schedule.id %></td>
+        <td><%=  schedule.start_time %></td>
+        <td><%=  schedule.end_time %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if @schedule.present? %>
+  <%= form_with url: movie_schedule_sheets_path(@movie, @schedule), method: :get, local: true do |f| %>
+      
+    <%= f.select :date, (0..6).map {|i| [(Time.now + i.days).strftime("%m月%d日"), (Time.now + i.days).strftime("%Y-%m-%d")]} %>
+
+    <%= f.select :schedule_id, @schedules.map {|schedule| [schedule.start_time.strftime("%m月%d日%H時%M分"), schedule.id]} %>
+  <button><%= f.submit '座席を予約する' %></button>
+<% end %>
+
 <% end %>

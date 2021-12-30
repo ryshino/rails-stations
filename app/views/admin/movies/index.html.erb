@@ -1,20 +1,3 @@
-<%= form_with(scope: :search, url:movies_path, method: :get, local: true) do |f| %>
-
-  <%= f.label :keyword %>
-  <%= f.text_field :keyword, value: @search_params[:keyword] %>
-
-  <%= f.submit 'Search' %>
-
-  <%= f.label :is_showing, '上映中', value: 1 %>
-  <%= f.radio_button :is_showing, 1 %>
-
-  <%= f.label :is_showing, '公開予定', value: 0 %>
-  <%= f.radio_button :is_showing, 0 %>
-
-  <%= f.label :is_showing, 'すべて' %>
-  <%= f.radio_button :is_showing, '' %>
-<% end %>
-
 <table>
   <thead>
     <tr>
@@ -26,16 +9,18 @@
       <th class="header2">上映中</th>
       <th class="header2">登録日時</th>
       <th class="header2">更新日時</th>
+      <th class="header2">映画開始時刻</th>
+      <th class="header2">映画開始時刻</th>
     </tr>
   </thead>
   <tbody>
     <% @movies.each do |movie| %>
       <tr>
-        <td><%= link_to movie.id, movie_path(movie) %></td>
+        <td><%= link_to movie.id, edit_admin_movie_path(movie) %></td>
         <td><%= movie.name %></td>
         <td><%= movie.year %></td>
         <td><%= safe_join(movie.description.split("\n"),tag(:br)) %></td>
-        <td><img src="<%= movie.image_url %>"></td>
+        <td><img src="<%= movie.image_url %>"/></td>
         <% if movie.is_showing == true %>
           <td>上映中</td>
         <% else %>
@@ -43,6 +28,10 @@
         <% end %>
         <td><%= l movie.created_at %></td>
         <td><%= l movie.updated_at %></td>
+        <% movie.schedules.each do |schedule| %>
+          <td><%= schedule.start_time.to_s %></td>
+          <td><%= schedule.end_time.to_s %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_15_014507) do
+ActiveRecord::Schema.define(version: 2022_01_08_020639) do
 
   create_table "movies", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 160, null: false, comment: "æ˜ ç”»ã\u0081®ã‚¿ã‚¤ãƒˆãƒ«ã€‚é‚¦é¡Œãƒ»æ´‹é¡Œã\u0081¯ä¸€æ—¦è€ƒã\u0081ˆã\u0081ªã\u0081\u008Fã\u0081¦OK"
@@ -21,6 +21,19 @@ ActiveRecord::Schema.define(version: 2021_08_15_014507) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "name_UNIQUE", unique: true
+  end
+
+  create_table "reservations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.date "date", null: false
+    t.bigint "schedule_id", null: false
+    t.bigint "sheet_id", null: false
+    t.string "email", null: false
+    t.string "name", limit: 50, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["date", "schedule_id", "sheet_id"], name: "index_reservations_on_date_and_schedule_id_and_sheet_id", unique: true
+    t.index ["schedule_id"], name: "fk_rails_c58adc1819"
+    t.index ["sheet_id"], name: "fk_rails_211e0e56f3"
   end
 
   create_table "schedules", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -39,5 +52,7 @@ ActiveRecord::Schema.define(version: 2021_08_15_014507) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "reservations", "schedules"
+  add_foreign_key "reservations", "sheets"
   add_foreign_key "schedules", "movies"
 end

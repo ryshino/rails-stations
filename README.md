@@ -1,8 +1,9 @@
 # TechTrain Rails Railway について
 
-Railway では Git で自分が取り組んだ内容を記録するときに、自動でテストが実行されます。この際、Station の内容に即した実装になっているかを最低限のラインとして確認します。
-テストが通れば Station クリアとなります。
-クリア後、TechTrain の画面に戻り、クリアになっているかを確認してみてください。
+Railway では Git で自分が取り組んだ内容を記録するときに、自動でテストが実行されます。この際、Station の内容に即した実装になっているかを最低限のラインとして確認します。  
+テストが通れば Station クリアとなります。  
+クリア後、TechTrain の画面に戻り、クリアになっているかを確認してみてください。  
+※テスト(Rspec)を書くことはクリア判定がうまく機能しないことがあるのでお控えください。
 
 
 ## バージョン情報
@@ -30,7 +31,7 @@ Dockerをお使いのPCにインストールしてください。
 Node.js, Yarnのインストールがまだの場合は[html-staions](https://github.com/TechBowl-japan/html-stations)を参考にインストールしてください。  
 また、使用PCがWindowsの場合は、WSLを[この記事](https://docs.microsoft.com/ja-jp/windows/wsl/install-win10)を参考にインストールしてください。
 
-### 「必要な」インストール済みの場合
+### 「必要なツール」インストール済みの場合
 
 次の手順で取り組み始めてください。
 
@@ -69,7 +70,7 @@ cd rails-stations
 
 ```powershell
 docker compose build
-docker compose run web bundle install
+docker compose run --rm web bundle install
 docker compose up -d
 docker compose exec web yarn install // ←こちらを実行した後に「TechTrainにログインします。GitHubでサインアップした方はお手数ですが、パスワードリセットよりパスワードを発行してください」と出てくるため、ログインを実行してください。出てこない場合は、コマンドの実行に失敗している可能性があるため、TechTrainの問い合わせかRailwayのSlackより問い合わせをお願いいたします。
 ```
@@ -100,83 +101,8 @@ Rails Railway に取り組み始めてください。
 
 SSHという仕組みを利用して繋ぐこともできますが、基本的には上記の設定で繋ぐのが一番簡単です。
 接続されないという方は、Dockerのビルドと起動がされていないかもしれません。
-解決についての詳細は、このREADMEにある 
+解決についての詳細は、このREADMEにある[DBに接続して中身を見たいです](#DBに接続して中身を見たいです)をご参照ください。
 
-## トラブルシューティング
-
-### DBに接続して中身が見れないなのですが？
-
-#### Dockerが起動されているかを確かめる
-Macなら, iTerm.app, Terminal.app
-Windowsなら, PowerShell
-
-などのアプリケーションを立ち上げ、このリポジトリが存在するディレクトリに移動してください。
-わからない方は、 `カレントディレクトリ 移動` などで調べてみてください。(Macなら、cdコマンド、Windowsなら一部dirコマンドを利用します)
-このリポジトリをCloneしたディレクトリがカレントディレクトリになるように移動してください。
-その上で `docker compose ps` を実行して次のようにDockerが起動されていることを確認してください。
-
-```shell
-$ docker compose ps
-
-        Name                      Command               State                          Ports                       
--------------------------------------------------------------------------------------------------------------------
-rails-stations_db_1    docker-entrypoint.sh --def ...   Up      0.0.0.0:3306->3306/tcp,:::3306->3306/tcp, 33060/tcp
-rails-stations_web_1   entrypoint.sh bash -c rm - ...   Up      0.0.0.0:3000->3000/tcp,:::3000->3000/tcp   
-```
-
-`Exit` という文字が見えたのであれば、何らかの原因でDockerの起動がうまく動作していません。
-`docker compose logs` コマンドを起動してその内容をコピペし、 RailwayのSlackワークスペースに入ってみてください。
-そちらで質問すると、回答があるかもしれません。自分で調べられるのがベストです。
-
-#### Dockerが起動されているが、接続されない
-
-Exitがない状態にも関わらず、接続できない場合は、Databaseの作成がうまくいっていない可能性があります。
-次のコマンドで動作するかどうかを確認してみてください。
-
-```
-docker compose exec db mysql -uroot -ppassword -e 'show databases;
-```
-
-次のような結果が返ってきていれば、正常です。
-
-```
-docker compose exec db mysql -uroot -ppassword -e 'show databases;'
-mysql: [Warning] Using a password on the command line interface can be insecure.
-+--------------------+
-| Database           |
-+--------------------+
-| app_development    |
-| app_test           |
-| information_schema |
-| message            |
-| mysql              |
-| performance_schema |
-| sys                |
-+--------------------+
-```
-
-もし、 `app_development` と `app_test` が作成されていないようであれば、次のコマンドを実行しましょう。
-
-```
-docker exec -i rails-stations_db_1 mysql -h127.0.0.1 -uroot -ppassword < init/001_ddl.sql
-```
-
-これで、 `app_development` と `app_test` が作成されていれば、問題なく接続できます。
-
-### commitしたのにチェックが実行されていないようなのですが？
-
-チェックのためには、次の二つの条件が必須となります。
-
-1. 黒い画面（CLI,コマンドライン）からTechTrainへのログイン
-2. pre-commit hook と呼ばれるcommit時に実行されるGitの仕組みが仕込まれていること
-
-特に2については
-
-* SourceTreeやGitHubAppでクローンした
-* httpsでクローンした
-
-際にうまくいかないことが多いということが報告されています。
-もし上記のようなことが起こった場合には、Terminalなどの画面でSSHによるクローンを試していただき、その上で `yarn install` を実行していただくことで解決することが多いです。もし解決しなかった場合には、運営までお問い合わせいただくか、RailwayのSlackワークスペースにてご質問ください。
 
 ## 自分のリポジトリの状態を最新の TechBowl-japan/rails-stations と合わせる
 
@@ -223,7 +149,9 @@ git push
 yarn install
 ```
 
-### GitHubアカウントでサインアップしたので、パスワードがないという方へ
+## よくある質問
+
+### （GitHubアカウントでサインアップしたので）パスワードがわかりません
 
 https://techbowl.co.jp/techtrain/resetpassword
 
@@ -233,3 +161,93 @@ https://techbowl.co.jp/techtrain/resetpassword
 ログインしていれば、次のURLから確認できます。
 
 https://techbowl.co.jp/techtrain/mypage/profile
+
+### DBに接続して中身を見たいです
+以下の2点を確認してみてください。
+
+#### Dockerが起動されているかを確かめる
+Macなら, iTerm.app, Terminal.app
+Windowsなら, PowerShell
+
+などのアプリケーションを立ち上げ、このリポジトリが存在するディレクトリに移動してください。
+わからない方は、 `カレントディレクトリ 移動` などで調べてみてください。(Macなら、cdコマンド、Windowsなら一部dirコマンドを利用します)
+このリポジトリをCloneしたディレクトリがカレントディレクトリになるように移動してください。
+その上で `docker compose ps` を実行して次のようにDockerが起動されていることを確認してください。
+
+```shell
+$ docker compose ps
+
+        Name                      Command               State                          Ports                       
+-------------------------------------------------------------------------------------------------------------------
+rails-stations_db_1    docker-entrypoint.sh --def ...   Up      0.0.0.0:3306->3306/tcp,:::3306->3306/tcp, 33060/tcp
+rails-stations_web_1   entrypoint.sh bash -c rm - ...   Up      0.0.0.0:3000->3000/tcp,:::3000->3000/tcp   
+```
+
+`Exit` という文字が見えたのであれば、何らかの原因でDockerの起動がうまく動作していません。
+`docker compose logs` コマンドを起動してその内容をコピペし、 RailwayのSlackワークスペースに入ってみてください。
+そちらで質問すると、回答があるかもしれません。自分で調べられるのがベストです。
+
+#### Dockerが起動されているが、接続されない
+
+Exitがない状態にも関わらず、接続できない場合は、Databaseの作成がうまくいっていない可能性があります。
+次のコマンドで動作するかどうかを確認してみてください。
+
+```
+docker compose exec db mysql -uroot -ppassword -e 'show databases;';
+```
+
+次のような結果が返ってきていれば、正常です。
+
+```
+docker compose exec db mysql -uroot -ppassword -e 'show databases;'
+mysql: [Warning] Using a password on the command line interface can be insecure.
++--------------------+
+| Database           |
++--------------------+
+| app_development    |
+| app_test           |
+| information_schema |
+| message            |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+```
+
+もし、 `app_development` と `app_test` が作成されていないようであれば、次のコマンドを実行しましょう。
+
+```
+docker exec -i rails-stations_db_1 mysql -h127.0.0.1 -uroot -ppassword < init/001_ddl.sql
+```
+
+これで、 `app_development` と `app_test` が作成されていれば、問題なく接続できます。
+
+### commitしたのにチェックが実行されていないようです
+
+チェックのためには、次の二つの条件が必須となります。
+
+1. 黒い画面（CLI,コマンドライン）からTechTrainへのログイン
+2. pre-commit hook と呼ばれるcommit時に実行されるGitの仕組みが仕込まれていること
+
+特に2については
+
+* SourceTreeやGitHubAppでクローンした
+* httpsでクローンした
+
+際にうまくいかないことが多いということが報告されています。
+もし上記のようなことが起こった場合には、Terminalなどの画面でSSHによるクローンを試していただき、その上で `yarn install` を実行していただくことで解決することが多いです。もし解決しなかった場合には、運営までお問い合わせいただくか、RailwayのSlackワークスペースにてご質問ください。
+
+### commitしないでテストを実行したいです
+以下のようなコマンドを実行するとstationXX（01〜13の2桁の数字が入ります）のテストだけを実行できます。
+エラーメッセージもより詳細に出力されるため、なぜエラーが出ているかわからない人はこちらで実行するのをおすすめします。
+
+```shell
+docker compose exec web rspec spec/stationXX
+```
+
+また、以下のようなエラーが出力されている際にはクラス名などが定義されていないか運営による不具合の可能性があるため、一度上のコマンドを実行しRspecとしてエラーを出力してどちらに当たるか判断していただくようお願いいたします。
+```bash
+× エラー：有効なテストが存在しません．
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+```

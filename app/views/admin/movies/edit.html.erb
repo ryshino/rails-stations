@@ -1,0 +1,55 @@
+<%= form_with model: [:admin, @movie], local: true do |f| %>
+<%= render 'layouts/error_messages', model: f.object %>
+
+  <div>
+    <%= f.label :name, '映画タイトル' %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :year, '公開年' %>
+    <%= f.text_field :year %>
+  </div>
+
+  <div>
+    <%= f.label :is_showing, '上映中か' %>
+    <%= f.select :is_showing, [["上映中", "1"], ["公開予定", "0"]] %>
+  </div>
+
+   <div>
+    <%= f.label :description, '概要' %>
+    <%= f.text_area :description %>
+  </div>
+
+  <div>
+    <%= f.label :image_url, '画像URL' %>
+    <%= f.file_field :image_url %>
+  </div>
+
+  <%= f.submit '更新' %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th class="header2">ID</th>
+      <th class="header2">映画開始時刻</th>
+      <th class="header2">映画終了時刻</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @movie.schedules.each do |schedule| %>
+      <tr>
+        <td><%= link_to schedule.id, edit_admin_schedule_path(schedule) %></td>
+        <td><%= l schedule.start_time %></td>
+        <td><%= l schedule.end_time %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "スケジュールを追加", new_admin_schedule_path %><br>
+
+<%= link_to admin_movie_path(@movie), method: :delete, data: {confirm: "本当に削除してよろしいですか？"} do %>
+  削除する
+<% end %>
