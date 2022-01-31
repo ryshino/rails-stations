@@ -9,8 +9,9 @@
       <th class="header2">上映中</th>
       <th class="header2">登録日時</th>
       <th class="header2">更新日時</th>
+      <th class="header2">予約欄</th>
       <th class="header2">映画開始時刻</th>
-      <th class="header2">映画開始時刻</th>
+      <th class="header2">映画終了</th>
     </tr>
   </thead>
   <tbody>
@@ -28,9 +29,12 @@
         <% end %>
         <td><%= l movie.created_at %></td>
         <td><%= l movie.updated_at %></td>
+        <td>
+          <%= link_to "予約する", new_admin_reservation_path(id: movie.id) %>
+        </td>
         <% movie.schedules.each do |schedule| %>
-          <td><%= schedule.start_time.to_s %></td>
-          <td><%= schedule.end_time.to_s %></td>
+          <td><%= schedule.start_time %></td>
+          <td><%= l schedule.end_time %></td>
         <% end %>
       </tr>
     <% end %>

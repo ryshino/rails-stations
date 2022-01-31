@@ -1,0 +1,30 @@
+<table>
+  <thead>
+    <tr>
+      <th class="header1">ID</th>
+      <th class="header1">映画作品</th>
+      <th class="header2">座席</th>
+      <th class="header2">日時</th>
+      <th class="header2">名前</th>
+      <th class="header2">メールアドレス</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @movies.each do |movie| %>
+      <% movie.schedules.each do |schedule| %>
+        <% schedule.reservations.each do |reservation| %>
+          <tr>
+            <td><%= link_to reservation.id, admin_reservation_path(reservation) %></td>
+            <td><%= movie.name %></td>
+            <td><%= reservation.sheet_id %></td>
+            <td><%= reservation.date %></td>
+            <td><%= reservation.name %></td>
+            <td><%= reservation.email %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "映画一覧画面へ", admin_movies_path %>

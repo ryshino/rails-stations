@@ -1,8 +1,7 @@
 # TechTrain Rails Railway について
-
-Railway では Git で自分が取り組んだ内容を記録するときに、自動でテストが実行されます。この際、Station の内容に即した実装になっているかを最低限のラインとして確認します。  
-テストが通れば Station クリアとなります。  
-クリア後、TechTrain の画面に戻り、クリアになっているかを確認してみてください。  
+Railway では Git で自分が取り組んだ内容を記録するときに、自動でテストが実行されます。この際、Station の内容に即した実装になっているかを最低限のラインとして確認します。
+テストが通れば Station クリアとなります。
+クリア後、TechTrain の画面に戻り、クリアになっているかを確認してみてください。
 ※テスト(Rspec)を書くことはクリア判定がうまく機能しないことがあるのでお控えください。
 
 
@@ -26,8 +25,8 @@ MySQL| 8.*
 |Docker|20.10.*|
 |Docker Compose|1.29.*|
 
-Dockerをお使いのPCにインストールしてください。  
-バージョンが異なる場合、動作しない場合があります。  
+Dockerをお使いのPCにインストールしてください。
+バージョンが異なる場合、動作しない場合があります。
 Node.js, Yarnのインストールがまだの場合は[html-staions](https://github.com/TechBowl-japan/html-stations)を参考にインストールしてください。  
 また、使用PCがWindowsの場合は、WSLを[この記事](https://docs.microsoft.com/ja-jp/windows/wsl/install-win10)を参考にインストールしてください。
 
@@ -72,6 +71,8 @@ cd rails-stations
 docker compose build
 docker compose run --rm web bundle install
 docker compose up -d
+docker compose exec web rails db:create
+docker compose exec web rails db:migrate
 docker compose exec web yarn install // ←こちらを実行した後に「TechTrainにログインします。GitHubでサインアップした方はお手数ですが、パスワードリセットよりパスワードを発行してください」と出てくるため、ログインを実行してください。出てこない場合は、コマンドの実行に失敗している可能性があるため、TechTrainの問い合わせかRailwayのSlackより問い合わせをお願いいたします。
 ```
 
@@ -177,10 +178,10 @@ Windowsなら, PowerShell
 ```shell
 $ docker compose ps
 
-        Name                      Command               State                          Ports                       
+        Name                      Command               State                          Ports
 -------------------------------------------------------------------------------------------------------------------
 rails-stations_db_1    docker-entrypoint.sh --def ...   Up      0.0.0.0:3306->3306/tcp,:::3306->3306/tcp, 33060/tcp
-rails-stations_web_1   entrypoint.sh bash -c rm - ...   Up      0.0.0.0:3000->3000/tcp,:::3000->3000/tcp   
+rails-stations_web_1   entrypoint.sh bash -c rm - ...   Up      0.0.0.0:3000->3000/tcp,:::3000->3000/tcp
 ```
 
 `Exit` という文字が見えたのであれば、何らかの原因でDockerの起動がうまく動作していません。
@@ -214,14 +215,6 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 +--------------------+
 ```
 
-もし、 `app_development` と `app_test` が作成されていないようであれば、次のコマンドを実行しましょう。
-
-```
-docker exec -i rails-stations_db_1 mysql -h127.0.0.1 -uroot -ppassword < init/001_ddl.sql
-```
-
-これで、 `app_development` と `app_test` が作成されていれば、問題なく接続できます。
-
 ### commitしたのにチェックが実行されていないようです
 
 チェックのためには、次の二つの条件が必須となります。
@@ -250,4 +243,20 @@ docker compose exec web rspec spec/stationXX
 × エラー：有効なテストが存在しません．
 error Command failed with exit code 1.
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+```
+
+### WindowsでContainerが立ち上がらない
+WSLのインストールが済んでいて、buildは成功するが以下のようなエラーが出力される場合には改行コードがCRLFになっている可能性があります。
+```bash
+standard_init_linux.go:228: exec user process caused: no such file or directory
+```
+
+その場合には、`git clone`で改行コードがLFをCRLFに変換しないようにする必要があります。
+そのため、自動変換をしないようにして再度ローカルに`git clone`を再実行してください。
+```bash
+git config --global core.autocrlf input
+
+git clone https://github.com/{GitHubのユーザー名}/rails-stations.git
+
+# 再度、パッケージのインストールのコマンドを実行しなおしてください。
 ```

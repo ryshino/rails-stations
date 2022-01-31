@@ -8,6 +8,5 @@ class Reservation < ApplicationRecord
   format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
   uniqueness: { case_sensitive: false }
 
-  validates_uniqueness_of :date, scope: [:schedule_id,
-  :sheet_id]
+  validates :schedule_id, uniqueness: { scope: [:sheet_id, :date] }
 end

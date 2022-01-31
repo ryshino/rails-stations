@@ -1,0 +1,39 @@
+<%= form_with model: [:admin, @reservation], local: true do |f| %>
+
+  <div>
+    <%= f.label :movie_id, "選択中の映画【#{@schedule.movie.name}】" %>
+    <%= f.hidden_field :movie_id, :value => @schedule.movie_id %>
+  </div>
+  
+  <div>
+    <%= f.label :date, "日時を選択してください" %>
+    <%= f.select :date, (0..6).map {|i| [(Time.now + i.days).strftime("%m月%d日"), (Time.now + i.days).strftime("%Y-%m-%d")]} %>
+  </div>
+
+  <div>
+    <%= f.label :sheet_id, "座席を選択してください" %>
+    <%= f.select :sheet_id, @sheets.map {|sheet| [sheet.id, sheet.id]} %>
+  </div>
+
+  <div>
+    <%= f.label :schedule_id, "選択中のschedule_id【#{@schedule.id}】" %>
+    <%= f.hidden_field :schedule_id %>
+  </div>
+  
+  <div>
+    <%= f.label :name, '予約者氏名' %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :email, 'メールアドレス' %>
+    <%= f.email_field :email %>
+  </div>
+
+
+  <%= f.submit '予約' %>
+<% end %> 
+
+<%= link_to admin_reservation_path(@reservation), method: :delete, data: {confirm: "本当に削除してよろしいですか？"} do %>
+  削除する
+<% end %>
