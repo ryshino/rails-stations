@@ -1,12 +1,11 @@
 class CreateSchedules < ActiveRecord::Migration[6.1]
   def change
     create_table :schedules do |t|
-      t.time :start_time
-      t.time :end_time
-      t.integer :movie_id
+      t.datetime :start_time
+      t.datetime :end_time
+      t.references :movie, foreign_key: true
 
       t.timestamps
     end
-    add_foreign_key :schedules, :movies
   end
 end
