@@ -12,6 +12,7 @@
       <th class="header2">予約欄</th>
       <th class="header2">映画開始時刻</th>
       <th class="header2">映画終了</th>
+      <th class="header2">スクリーン番号</th>
     </tr>
   </thead>
   <tbody>
@@ -36,6 +37,7 @@
           <td><%= schedule.start_time %></td>
           <td><%= l schedule.end_time %></td>
         <% end %>
+        <td><%= movie.screen_id %></td>
       </tr>
     <% end %>
   </tbody>

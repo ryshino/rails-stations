@@ -1,8 +1,9 @@
 class Movie < ApplicationRecord
   has_many :schedules, dependent: :destroy
+  belongs_to :screen
 
   validates :name, uniqueness: true
-  validates :name, :year, :description, :image_url, presence: true
+  validates :name, :year, :description, :image_url, :screen_id, presence: true
 
   scope :search, -> (search_params) do
     return if search_params.blank?

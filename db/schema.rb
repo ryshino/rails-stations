@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_08_020639) do
+ActiveRecord::Schema.define(version: 2022_02_05_064844) do
 
   create_table "movies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 160, null: false, comment: "映画のタイトル。邦題・洋題は一旦考えなくてOK"
@@ -20,7 +20,9 @@ ActiveRecord::Schema.define(version: 2022_01_08_020639) do
     t.boolean "is_showing", null: false, comment: "上映中かどうか"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "screen_id"
     t.index ["name"], name: "index_movies_on_name"
+    t.index ["screen_id"], name: "index_movies_on_screen_id"
   end
 
   create_table "reservations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -45,6 +47,12 @@ ActiveRecord::Schema.define(version: 2022_01_08_020639) do
     t.index ["movie_id"], name: "index_schedules_on_movie_id"
   end
 
+  create_table "screens", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "screen", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "sheets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "column", null: false
     t.string "row", limit: 1, null: false
@@ -52,6 +60,7 @@ ActiveRecord::Schema.define(version: 2022_01_08_020639) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "movies", "screens"
   add_foreign_key "reservations", "schedules"
   add_foreign_key "reservations", "sheets"
   add_foreign_key "schedules", "movies"
