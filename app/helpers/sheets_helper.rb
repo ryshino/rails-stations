@@ -9,7 +9,7 @@ module SheetsHelper
         return result if result
       end
     elsif reservations_count == 1
-      result = reservation[:sheet_id].eql?(sheet.id) && reservation[:schedule_id].eql?(schedule.id) && reservation[:date].eql?(Date.parse(date))
+      result = reservations[0][:sheet_id].eql?(sheet.id) && reservations[0][:schedule_id].eql?(schedule.id) && reservations[0][:date].eql?(Date.parse(date))
       return result if result
     end
     return result    

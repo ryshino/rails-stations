@@ -17,3 +17,7 @@ end
 5.times do |n|
   Sheet.create(:column => n+1, :row => 'c')
 end
+
+3.times do |n|
+  Screen.create(:screen => n+1 )
+end

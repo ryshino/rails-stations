@@ -1,0 +1,27 @@
+<table class="row">
+  <thead>
+    <tr>
+      <th class="header1">1</th>
+      <th class="header2">2</th>
+      <th class="header2">3</th>
+      <th class="header2">4</th>
+      <th class="header2">5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% sheets.each do |sheet| %>
+      <% if check_reservation(@reservations, sheet, @schedule, @date) %>
+        <td class="already_reservation">
+          <%= sheet.column %>
+        </td>
+      <% else %>
+      <td>
+        <%= link_to new_movie_schedule_reservation_path(@movie, @schedule, date: @date, sheet_id: sheet.id) do %>
+          <%= sheet.column %>
+        <% end %>
+      </td>
+      <% end %>
+    <% end %>
+    </tr>
+  </tbody>
+</table>

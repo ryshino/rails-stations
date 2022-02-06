@@ -26,5 +26,10 @@
     <%= f.file_field :image_url %>
   </div>
 
+  <div>
+    <%= f.label :screen_id, 'スクリーン番号' %>
+    <%= f.select :screen_id, [["1", 1], ["2", 2], ["3", 3]] %>
+  </div>
+
   <%= f.submit '投稿' %>
 <% end %> 

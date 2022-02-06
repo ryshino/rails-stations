@@ -1,6 +1,6 @@
 FROM ruby:2.7.3
 RUN apt-get update -qq
-RUN apt-get install -y nodejs npm && npm install n -g && n lts
+RUN apt-get install -y nodejs npm postgresql-client imagemagick graphviz && npm install n -g && n lts
 RUN npm install -g yarn
 RUN mkdir /app
 WORKDIR /app

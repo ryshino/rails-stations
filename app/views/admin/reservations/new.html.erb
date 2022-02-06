@@ -11,7 +11,7 @@
 
   <div>
     <%= f.label :schedule_id, "予約時間を選択してください" %>
-    <%= f.select :schedule_id, @schedules.map {|schedule| [schedule.id, schedule.id]} %>
+    <%= f.select :schedule_id, @movie.schedules.map {|schedule| [schedule.start_time, schedule.id]} %>
   </div>
   
   <div>

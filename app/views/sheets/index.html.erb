@@ -1,27 +1,7 @@
-<table class="row">
-  <thead>
-    <tr>
-      <th class="header1">1</th>
-      <th class="header2">2</th>
-      <th class="header2">3</th>
-      <th class="header2">4</th>
-      <th class="header2">5</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @sheets.each do |sheet| %>
-      <% if check_reservation(@reservations, sheet, @schedule, @date) %>
-        <td class="already_reservation">
-          <%= sheet.column %>
-        </td>
-      <% else %>
-      <td>
-        <%= link_to new_movie_schedule_reservation_path(@movie, @schedule, date: @date, sheet_id: sheet.id) do %>
-          <%= sheet.column %>
-        <% end %>
-      </td>
-      <% end %>
-    <% end %>
-    </tr>
-  </tbody>
-</table>
+<% if @movie.screen_id == 1 %>
+  <%= render partial: '1_sheets', locals: { sheets: @sheets } %>
+<% elsif @movie.screen_id == 2 %>
+  <%= render partial: '2_sheets', locals: { sheets: @sheets } %>
+<% else %>
+  <%= render partial: '3_sheets', locals: { sheets: @sheets } %>
+<% end %>
