@@ -3,6 +3,9 @@ class MoviesController < ApplicationController
   def index
     @search_params = movie_search_params
     @movies = Movie.search(@search_params)
+    if user_signed_in?
+      @user = User.find_by(id: current_user.id)
+    end
   end
 
 

@@ -1,4 +1,6 @@
 class SheetsController < ApplicationController
+  before_action :require_user_logged_in, only: [:index]
+
   def index
     @sheets = Sheet.all
     @movie = Movie.find(params[:movie_id])
@@ -9,5 +11,5 @@ class SheetsController < ApplicationController
 
   
   private
-
+  
 end
