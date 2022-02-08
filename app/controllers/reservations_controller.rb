@@ -9,6 +9,7 @@ class ReservationsController < ApplicationController
       @sheet = Sheet.find(params[:sheet_id])
       @schedule = params[:schedule_id]
       @date = params[:date]
+      @user = User.find_by(id: current_user.id) 
     end
   end
 

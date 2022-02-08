@@ -3,7 +3,6 @@
 
   <div>
     <%= f.label :movie_id, "選択中の映画【#{@movie.name}】" %>
-    <%= f.hidden_field :movie_id, :value => @movie.id %>
   </div>
   
   <div>
@@ -23,12 +22,12 @@
   
   <div>
     <%= f.label :name, '予約者氏名' %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, value: @user.name %>
   </div>
 
   <div>
     <%= f.label :email, 'メールアドレス' %>
-    <%= f.email_field :email %>
+    <%= f.email_field :email, value: @user.email %>
   </div>
 
 
