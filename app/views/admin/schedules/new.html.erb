@@ -2,7 +2,6 @@
 
 <%= form_with model: [:admin, @schedule], local: true do |f| %>
 <%= render 'layouts/error_messages', model: f.object %>
-<%= render 'layouts/flash_messages' %>
 
   <div>
     <%= f.label :movie_id, '映画ID' %>
