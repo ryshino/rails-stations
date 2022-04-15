@@ -13,7 +13,7 @@
 
   <div>
     <%= f.label :is_showing, '上映中か' %>
-    <%= f.select :is_showing, [["上映中", "1"], ["公開予定", "0"]] %>
+    <%= f.select :is_showing, [["上映中", 1], ["公開予定", 0]] %>
   </div>
 
    <div>
@@ -27,9 +27,27 @@
   </div>
 
   <div>
-    <%= f.label :screen_id, 'スクリーン番号' %>
-    <%= f.select :screen_id, [["1", 1], ["2", 2], ["3", 3]] %>
+    <%= f.label :theater_id, '映画館を選択' %>
+    <%= f.select :theater_id, @theaters.map{ |theater| [theater.name, theater.id] } %>
+  </div>
+
+  <div>
+    <%= f.label :screen_id, '劇場を選択' %>
+    <%= f.select :screen_id, @screens.map{ |screen| [screen.screen, screen.id] } %>
   </div>
 
   <%= f.submit '投稿' %>
 <% end %> 
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    // 劇場を選択
+    $('#movie_theater_id').change(function(){
+      let theater_id = $("#movie_theater_id").val();
+      $.get("<%= admin_movies_screen_select_path %>",
+        { theater_id: theater_id },
+        function(data){ }
+      );
+    });
+  });
+</script>

@@ -18,6 +18,6 @@ class MoviesController < ApplicationController
   private
 
   def movie_search_params
-    params.fetch(:search, {}).permit(:keyword, :is_showing)
+    params.fetch(:search, {}).permit(:keyword, :is_showing, :theater_id)
   end
  end
