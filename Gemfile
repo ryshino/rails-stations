@@ -66,3 +66,5 @@ gem 'rails-i18n'
 
 gem 'devise'
 gem 'email_validator'
+
+gem 'jquery-rails'

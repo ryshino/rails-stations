@@ -17,13 +17,17 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params)
     @schedule = Schedule.find_by(id: @reservation.schedule_id)
     @movie = Movie.find_by(id: @schedule.movie_id)
+    @user = User.find_by(id: current_user.id)
 
-    if @reservation.save
-      flash[:notice] = '予約が完了しました'
-      redirect_to movie_path(@movie)
-    else
-      flash[:alert] = '予約に失敗しました'
-      redirect_to movie_schedule_sheets_path(@movie, @schedule, date: @reservation.date)
+    respond_to do |format|
+      if @reservation.save
+        ReservationMailer.with(user: @user, reservation: @reservation, movie: @movie, schedule: @schedule).complete_reservation.deliver
+        format.html { redirect_to(@movie, notice: '予約が完了しました') }
+        format.json { render json: @movie, status: :created, location: @movie }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @reservation.errors, status: :unprocessable_entity }
+      end
     end
   end
 

@@ -50,7 +50,8 @@
     <%= f.select :date, (0..6).map {|i| [(Time.now + i.days).strftime("%m月%d日"), (Time.now + i.days).strftime("%Y-%m-%d")]} %>
 
     <%= f.select :schedule_id, @schedules.map {|schedule| [schedule.start_time.strftime("%m月%d日%H時%M分"), schedule.id]} %>
-  <button><%= f.submit '座席を予約する' %></button>
+    <button><%= f.submit '座席を予約する' %></button>
+  <% end %> 
 <% end %>
 
-<% end %>
+<%= link_to '映画一覧に戻る', movies_path %>

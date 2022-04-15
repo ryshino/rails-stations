@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_06_053743) do
+ActiveRecord::Schema.define(version: 2022_03_12_055814) do
 
   create_table "movies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 160, null: false, comment: "映画のタイトル。邦題・洋題は一旦考えなくてOK"
@@ -21,8 +21,10 @@ ActiveRecord::Schema.define(version: 2022_02_06_053743) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "screen_id"
+    t.bigint "theater_id"
     t.index ["name"], name: "index_movies_on_name"
     t.index ["screen_id"], name: "index_movies_on_screen_id"
+    t.index ["theater_id"], name: "index_movies_on_theater_id"
   end
 
   create_table "reservations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -51,11 +53,23 @@ ActiveRecord::Schema.define(version: 2022_02_06_053743) do
     t.integer "screen", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "theater_id"
+    t.index ["theater_id"], name: "index_screens_on_theater_id"
   end
 
   create_table "sheets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "column", null: false
     t.string "row", limit: 1, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "screen_id"
+    t.bigint "theater_id"
+    t.index ["screen_id"], name: "index_sheets_on_screen_id"
+    t.index ["theater_id"], name: "index_sheets_on_theater_id"
+  end
+
+  create_table "theaters", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -74,7 +88,11 @@ ActiveRecord::Schema.define(version: 2022_02_06_053743) do
   end
 
   add_foreign_key "movies", "screens"
+  add_foreign_key "movies", "theaters"
   add_foreign_key "reservations", "schedules"
   add_foreign_key "reservations", "sheets"
   add_foreign_key "schedules", "movies"
+  add_foreign_key "screens", "theaters"
+  add_foreign_key "sheets", "screens"
+  add_foreign_key "sheets", "theaters"
 end

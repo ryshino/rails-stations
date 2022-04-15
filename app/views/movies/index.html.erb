@@ -4,6 +4,12 @@
   <%= f.text_field :keyword, value: @search_params[:keyword] %>
 
   <%= f.submit 'Search' %>
+  
+  <%= f.label :theater_id, '映画館1' %>
+  <%= f.radio_button :theater_id, 1 %>
+
+  <%= f.label :theater_id, '映画館2' %>
+  <%= f.radio_button :theater_id, 2 %>
 
   <%= f.label :is_showing, '上映中', value: 1 %>
   <%= f.radio_button :is_showing, 1 %>
@@ -24,6 +30,7 @@
       <th class="header2">概要</th>
       <th class="header2">画像URL</th>
       <th class="header2">上映中</th>
+      <th class="header2">映画館</th>
       <th class="header2">登録日時</th>
       <th class="header2">更新日時</th>
     </tr>
@@ -41,6 +48,7 @@
         <% else %>
           <td>公開予定</td>
         <% end %>
+        <td><%= movie.theater.name %></td>
         <td><%= l movie.created_at %></td>
         <td><%= l movie.updated_at %></td>
       </tr>

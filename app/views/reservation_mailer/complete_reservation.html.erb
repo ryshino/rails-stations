@@ -1,0 +1,11 @@
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1><%= @user.name %>様、映画の予約が完了しました！</h1>
+    <p>映画館：<%= @movie.theater_id %></p>
+    <p>作品：<%= @movie.name %></p>
+    <p>上映時刻：<%= l @schedule.start_time %></p>
+  </body>
+</html>

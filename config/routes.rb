@@ -17,11 +17,11 @@ Rails.application.routes.draw do
   end
 
   post 'reservations/', to: 'reservations#create'
+  get '/admin/movies/screen_select' => 'admin/movies#screen_select'
 
   namespace :admin do
     resources :movies
     resources :schedules
     resources :reservations, only: [:index, :new, :create, :show, :update, :destroy]
   end
-
 end
