@@ -1,7 +1,9 @@
 FROM ruby:2.7.3
 RUN apt-get update -qq
 RUN apt-get install -y nodejs npm postgresql-client imagemagick graphviz && npm install n -g && n lts
+RUN apt-get install -y cron
 RUN npm install -g yarn
+RUN service cron start
 RUN mkdir /app
 WORKDIR /app
 

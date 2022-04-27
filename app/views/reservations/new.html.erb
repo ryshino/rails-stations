@@ -30,6 +30,11 @@
     <%= f.email_field :email, value: @user.email %>
   </div>
 
+  <div>
+    <%= f.label :email, '後で非表示にする' %>
+    <%= f.text_field :user_id, value: @user.id %>
+  </div>
+
 
   <%= f.submit '予約' %>
 <% end %> 

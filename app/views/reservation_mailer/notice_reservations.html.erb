@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1><%= @user.name %>様、明日の映画の予約確認メールです</h1>
+    <p>映画館：<%= @movie.theater_id %></p>
+    <p>作品：<%= @movie.name %></p>
+    <p>上映時刻：<%= l @schedule.start_time %></p>
+    <p>座席： <%= @sheet.column %> </p>
+  </body>
+</html>
+
+- 映画館・作品・上映時刻・座席・名前

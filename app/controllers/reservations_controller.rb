@@ -19,22 +19,20 @@ class ReservationsController < ApplicationController
     @movie = Movie.find_by(id: @schedule.movie_id)
     @user = User.find_by(id: current_user.id)
 
-    respond_to do |format|
-      if @reservation.save
-        ReservationMailer.with(user: @user, reservation: @reservation, movie: @movie, schedule: @schedule).complete_reservation.deliver
-        format.html { redirect_to(@movie, notice: '予約が完了しました') }
-        format.json { render json: @movie, status: :created, location: @movie }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @reservation.errors, status: :unprocessable_entity }
-      end
+    if @reservation.save
+      ReservationMailer.with(user: @user, reservation: @reservation, movie: @movie, schedule: @schedule).complete_reservation.deliver
+      flash[:notice] = '予約が完了しました'
+      redirect_to movie_path(@movie)
+    else
+      flash[:alert] = '予約に失敗しました'
+      redirect_to movie_schedule_sheets_path(@movie, @schedule, date: @reservation.date)
     end
   end
 
   private
 
   def reservation_params
-    params.require(:reservation).permit(:date, :schedule_id, :sheet_id, :email, :name)
+    params.require(:reservation).permit(:date, :schedule_id, :sheet_id, :email, :name, :user_id)
   end
 
   def reservation_parameter?
