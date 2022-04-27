@@ -1,0 +1,7 @@
+<%= @user.name %>様、明日の映画の予約確認メールです
+===============================================
+    <%= @user.name %>様、映画の予約が完了しました！
+    映画館：<%= @movie.theater_id %>
+    作品：<%= @movie.name %>
+    上映時刻：<%= l @schedule.start_time %>
+    座席： <%= @sheet.column %>
