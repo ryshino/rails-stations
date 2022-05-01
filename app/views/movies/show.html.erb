@@ -11,7 +11,7 @@
   </thead>
   <tbody>
     <tr>
-      <td><%= @movie.id %></td>
+      <td id="movie_id"><%= @movie.id %></td>
       <td><%= @movie.name %></td>
       <td><%= @movie.year %></td>
       <td><%= safe_join(@movie.description.split("\n"),tag(:br)) %></td>
@@ -44,14 +44,23 @@
   </tbody>
 </table>
 
-<% if @schedule.present? %>
-  <%= form_with url: movie_schedule_sheets_path(@movie, @schedule), method: :get, local: true do |f| %>
-      
-    <%= f.select :date, (0..6).map {|i| [(Time.now + i.days).strftime("%m月%d日"), (Time.now + i.days).strftime("%Y-%m-%d")]} %>
+<%= form_with model: @movie, local: true do |f| %>
+    
+  <%= f.select :date, (0..6).map {|i| [(Time.now + i.days).strftime("%m月%d日"), (Time.now + i.days).strftime("%Y-%m-%d")]} %>
 
-    <%= f.select :schedule_id, @schedules.map {|schedule| [schedule.start_time.strftime("%m月%d日%H時%M分"), schedule.id]} %>
-    <button><%= f.submit '座席を予約する' %></button>
-  <% end %> 
-<% end %>
+  <%= f.select :schedule_id, @schedules.map {|schedule| [schedule.start_time.strftime("%m月%d日%H時%M分"), schedule.id]} %>
+  <button type="button" id="selectSchedule">座席を予約する</button>
+<% end %> 
 
 <%= link_to '映画一覧に戻る', movies_path %>
+
+<script  type="text/javascript">
+ $(function(){
+    $('#selectSchedule').click(function(){
+      const movie_id = document.getElementById('movie_id').innerHTML;
+      const select_date = document.getElementById("movie_date").value;
+      const schedule_id = document.getElementById("movie_schedule_id").value;
+      window.location.href = `/movies/${movie_id}/schedules/${schedule_id}/sheets?date=`+  encodeURIComponent( select_date );
+    });
+  });
+</script>
