@@ -29,6 +29,22 @@ class ReservationsController < ApplicationController
     end
   end
 
+  def notice_reservations
+    @schedules = Schedule.all
+    @schedules.each do |schedule|
+      if Date.tomorrow == schedule.start_time.to_date
+        schedule.reservations.each do |reservation|
+          @user = User.find_by(id: reservation.user_id)
+          @sheet = Sheet.find_by(id: reservation.sheet_id)
+          @movie = Movie.find_by(id: schedule.movie_id)
+          @schedule = schedule
+          ReservationMailer.with(user: @user, sheet: @sheet, movie: @movie, schedule: @schedule).send_notice_reservations.deliver
+        end
+      end
+    end
+  end
+
+
   private
 
   def reservation_params

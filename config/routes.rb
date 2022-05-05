@@ -12,12 +12,13 @@ Rails.application.routes.draw do
   resources :movies do
     resources :schedules do
       resources :sheets, only: [:index]
-      resources :reservations, only: [:new]
+      resources :reservations, only: [:new,]
     end
   end
 
   post 'reservations/', to: 'reservations#create'
   get '/admin/movies/screen_select' => 'admin/movies#screen_select'
+
 
   namespace :admin do
     resources :movies
