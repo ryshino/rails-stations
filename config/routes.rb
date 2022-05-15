@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  root 'movies#index'
+  #root 'movies#index'
+  root 'rankings#movie_reservation_ranking'
   
   devise_for :users
   

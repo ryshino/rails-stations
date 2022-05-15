@@ -6,7 +6,12 @@ set :environment, :development
 set :output, 'log/cron.log'
 ENV.each { |k, v| env(k, v) }
 
+#every 1.minutes do
+#every 1.day, at: '7pm' do
+  #rake 'notifications:notice_mail'
+#end
+
 every 1.minutes do
-#every 1.day, at: '9am' do
-  rake 'notifications:notice_mail'
+#every 1.day, at: '0pm' do
+  rake 'rankings:movie_reservation_count'
 end

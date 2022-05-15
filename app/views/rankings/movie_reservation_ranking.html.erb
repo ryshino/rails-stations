@@ -1,0 +1,32 @@
+<table>
+  <thead>
+    <tr>
+      <th class="header1">順位</th>
+      <th class="header1">作品名</th>
+      <th class="header2">予約件数</th>
+    </tr>
+  </thead>
+  <tbody>
+      <% lastReservation_count = 0 %>
+      <% j = 1 %>
+      <% @rankings.each_with_index do |ranking, i| %>
+        <tr>
+          <% if i == 0 %>
+            <% lastReservation_count = ranking.reservation_count %>
+          <% end %>
+          <% if ranking.reservation_count != lastReservation_count %>
+            <% j = i+1 %>
+            <td><%= link_to j, movie_path(ranking.id) %></td>
+            <td><%= ranking.name %></td>
+            <td><%= ranking.reservation_count %></td>
+            <% lastRanking = ranking.reservation_count %>
+          <% else %>
+            <td><%= link_to j, movie_path(ranking.id) %></td>
+            <td><%= ranking.name %></td>
+            <td><%= ranking.reservation_count %></td>
+            <% lastRanking = ranking.reservation_count %>
+          <% end %>
+        </tr>
+      <% end %>
+  </tbody>
+</table>
