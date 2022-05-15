@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_17_231144) do
+ActiveRecord::Schema.define(version: 2022_05_07_080106) do
 
   create_table "movies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 160, null: false, comment: "映画のタイトル。邦題・洋題は一旦考えなくてOK"
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 2022_04_17_231144) do
     t.index ["name"], name: "index_movies_on_name"
     t.index ["screen_id"], name: "index_movies_on_screen_id"
     t.index ["theater_id"], name: "index_movies_on_theater_id"
+  end
+
+  create_table "rankings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.date "date", null: false
+    t.string "movie_name", null: false
+    t.integer "reservation_count", null: false
+    t.bigint "movie_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["date", "movie_name", "movie_id"], name: "index_rankings_on_date_and_movie_name_and_movie_id", unique: true
+    t.index ["movie_id"], name: "fk_rails_82d0c70099"
   end
 
   create_table "reservations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -91,6 +102,7 @@ ActiveRecord::Schema.define(version: 2022_04_17_231144) do
 
   add_foreign_key "movies", "screens"
   add_foreign_key "movies", "theaters"
+  add_foreign_key "rankings", "movies"
   add_foreign_key "reservations", "schedules"
   add_foreign_key "reservations", "sheets"
   add_foreign_key "reservations", "users"
