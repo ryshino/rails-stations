@@ -15,6 +15,10 @@ class RankingsController < ApplicationController
   def movie_reservation_ranking
     @rankings = Movie.joins(:rankings).select('movies.id, movies.name, sum(rankings.reservation_count) as reservation_count').
                       group(:id).where(rankings: { created_at: Time.zone.now.ago(30.days).beginning_of_day...Time.zone.yesterday.end_of_day}).order('reservation_count desc')
+                      
+    if user_signed_in?
+      @user = User.find_by(id: current_user.id)
+    end
   end
   
 end
