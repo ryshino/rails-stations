@@ -10,6 +10,16 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show]
   
+  devise_for :admin_users, controllers: {
+    sessions: 'admin_users/sessions',
+    passwords: 'admin_users/passwords',
+    registrations: 'admin_users/registrations'
+  }
+
+  devise_scope :admin_user do
+    get '/admin_users/sign_out' => 'devise/sessions#destroy'
+  end
+
   resources :movies do
     resources :schedules do
       resources :sheets, only: [:index]

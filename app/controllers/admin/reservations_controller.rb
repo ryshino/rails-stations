@@ -1,5 +1,6 @@
 class Admin::ReservationsController < ApplicationController
-  
+  before_action :authenticate_admin_user!
+
   def index
     @movies = Movie.all
   end
