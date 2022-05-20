@@ -77,3 +77,8 @@ end
     Sheet.create(:column => n+1, :row => 'c', :screen_id => 3, :theater_id => 2)
    end
   end
+
+  AdminUser.find_or_create_by(id: 1) do |admin|
+    admin.email = "example@example.com"
+    admin.password = "example"
+   end
