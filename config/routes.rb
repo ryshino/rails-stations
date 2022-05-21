@@ -25,6 +25,8 @@ Rails.application.routes.draw do
     get '/admin_users/sign_out', to: 'admin_users/sessions#destroy'
   end
 
+  get '/movies/schedule_select' => 'movies#schedule_select'
+  
   resources :movies do
     resources :schedules do
       resources :sheets, only: [:index]

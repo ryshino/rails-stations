@@ -8,7 +8,16 @@ class MoviesController < ApplicationController
     end
   end
 
-
+  def schedule_select
+    @date = params[:date]
+    @schedules = Schedule.where('start_time LIKE ?', "%#{@date}%").pluck(:start_time, :id)
+   if @schedules == []
+    @schedules = ["選択可能なスケジュールがありません"]
+   else 
+     @schedules
+   end
+  end
+  
   def show
     @movie = Movie.find(params[:id])
     @schedules = @movie.schedules

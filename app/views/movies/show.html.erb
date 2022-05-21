@@ -46,9 +46,11 @@
 
 <%= form_with model: @movie, local: true do |f| %>
     
-  <%= f.select :date, (0..6).map {|i| [(Time.now + i.days).strftime("%m月%d日"), (Time.now + i.days).strftime("%Y-%m-%d")]} %>
+  <%= f.select :date, (0..6).map {|i| [(Time.now + i.days).strftime("%m月%d日"), (Time.now + i.days).strftime("%Y-%m-%d")]}, { include_blank: '日付を選択してください'} %>
 
-  <%= f.select :schedule_id, @schedules.map {|schedule| [schedule.start_time.strftime("%m月%d日%H時%M分"), schedule.id]} %>
+    <select id="movie_schedule_id">
+      <option>スケジュールを選択してください</option>
+    </select>
   <button type="button" id="selectSchedule">座席を予約する</button>
 <% end %> 
 
@@ -61,6 +63,17 @@
       const select_date = document.getElementById("movie_date").value;
       const schedule_id = document.getElementById("movie_schedule_id").value;
       window.location.href = `/movies/${movie_id}/schedules/${schedule_id}/sheets?date=`+  encodeURIComponent( select_date );
+    });
+  });
+
+  $(document).ready(function(){
+    // 劇場を選択
+    $('#movie_date').change(function(){
+      let date = $("#movie_date").val();
+      $.get("<%= movies_schedule_select_path %>",
+        { date: date },
+        function(data){ }
+      );
     });
   });
 </script>
