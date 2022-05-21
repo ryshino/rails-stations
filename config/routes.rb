@@ -2,10 +2,15 @@ Rails.application.routes.draw do
   #root 'movies#index'
   root 'rankings#movie_reservation_ranking'
   
-  devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    passwords: 'users/passwords',
+    registrations: 'users/registrations'
+  }
   
   devise_scope :user do
     get 'users/new', to: 'devise/registrations#new'
+    get '/users/sign_out', to: 'users/sessions#destroy'
   end
 
   resources :users, only: [:show]
@@ -17,7 +22,7 @@ Rails.application.routes.draw do
   }
 
   devise_scope :admin_user do
-    get '/admin_users/sign_out' => 'devise/sessions#destroy'
+    get '/admin_users/sign_out', to: 'admin_users/sessions#destroy'
   end
 
   resources :movies do
