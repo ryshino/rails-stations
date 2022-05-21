@@ -12,12 +12,11 @@ class Admin::MoviesController < ApplicationController
   def new
     @movie = Movie.new
     @theaters = Theater.all
-    @screens = Screen.all
+    @screens = Screen.where(theater_id: 1)
   end
 
   def screen_select
     @screens = Screen.where(theater_id: params[:theater_id]).pluck(:screen, :id)
-    @screens.unshift(["選択してください", ""])
   end
 
   def create
