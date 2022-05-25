@@ -58,7 +58,7 @@
   </tbody>
 </table>
 
-<%= link_to "スケジュールを追加", new_admin_schedule_path %><br>
+<%= link_to "スケジュールを追加", new_admin_schedule_path(@movie) %><br>
 
 <%= link_to admin_movie_path(@movie), method: :delete, data: {confirm: "本当に削除してよろしいですか？"} do %>
   削除する

@@ -7,6 +7,7 @@ class Admin::SchedulesController < ApplicationController
 
   def new
     @schedule = Schedule.new
+    @movie = Movie.find_by(id: params[:format])
   end
 
   def create

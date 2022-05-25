@@ -4,8 +4,8 @@
 <%= render 'layouts/error_messages', model: f.object %>
 
   <div>
-    <%= f.label :movie_id, '映画ID' %>
-    <%= f.collection_select :movie_id, Movie.all, :id, :id %>
+    <%= f.label :movie_id, "スケジュールを追加する映画 【#{@movie.name}】" %>
+    <%= f.hidden_field :movie_id, :value => @movie.id %>
   </div>
   
   <div>
