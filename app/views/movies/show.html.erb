@@ -15,7 +15,7 @@
       <td><%= @movie.name %></td>
       <td><%= @movie.year %></td>
       <td><%= safe_join(@movie.description.split("\n"),tag(:br)) %></td>
-      <td><img src="<%= @movie.image_url %>"></td>
+      <td><%= image_tag @movie.image_url.url, class:'image' %></td>
       <% if @movie.is_showing == true %>
         <td>上映中</td>
       <% else %>
