@@ -24,6 +24,10 @@
     <%= f.email_field :email %>
   </div>
 
+  <div>
+    <%= f.label :user_id, 'ユーザーID' %>
+    <%= f.number_field :user_id %>
+  </div>
 
   <%= f.submit '予約' %>
 <% end %> 

@@ -15,14 +15,21 @@ class Admin::ReservationsController < ApplicationController
 
   def create
     @reservation = Reservation.new(reservation_params)
-
-    if @reservation.save
-      flash[:notice] = '予約に成功しました'
-      redirect_to admin_reservations_path
-    else
-      flash.now[:alert] = '予約に失敗しました'
+    @user = User.where("id LIKE ? AND name LIKE ? AND email LIKE ?", @reservation.user_id, @reservation.name, @reservation.email)
+    
+    if @user.blank?
+      flash.now[:alert] = '存在しないユーザーです'
       @movies = Movie.all
       render :index, status: 400
+    else
+      if @reservation.save
+        flash[:notice] = '予約に成功しました'
+        redirect_to admin_reservations_path
+      else
+        flash.now[:alert] = '予約に失敗しました'
+        @movies = Movie.all
+        render :index, status: 400
+      end
     end
   end
 
@@ -33,15 +40,23 @@ class Admin::ReservationsController < ApplicationController
   end
 
   def update
-    @reservation = Reservation.find(params[:id])
+    @reservation = Reservation.new(reservation_params)
+    @user = User.where("id LIKE ? AND name LIKE ? AND email LIKE ?", @reservation.user_id, @reservation.name, @reservation.email)
 
-    if @reservation.update(reservation_params) 
-      flash[:notice] = "登録内容を更新しました"
-      redirect_to admin_reservations_path
-    else
-      flash.now[:alert] = '更新に失敗しました'
+    if @user.blank?
+      flash.now[:alert] = '存在しないユーザーです'
       @movies = Movie.all
       render :index, status: 400
+    else
+      @reservation = Reservation.find(params[:id])
+      if @reservation.update(reservation_params) 
+        flash[:notice] = "登録内容を更新しました"
+        redirect_to admin_reservations_path
+      else
+        flash.now[:alert] = '更新に失敗しました'
+        @movies = Movie.all
+        render :index, status: 400
+      end
     end
   end
 
@@ -56,7 +71,7 @@ class Admin::ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params.require(:reservation).permit(:date, :schedule_id, :sheet_id, :email, :name)
+    params.require(:reservation).permit(:date, :schedule_id, :sheet_id, :email, :name, :user_id)
   end
 
 end
