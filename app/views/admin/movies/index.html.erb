@@ -10,8 +10,6 @@
       <th class="header2">登録日時</th>
       <th class="header2">更新日時</th>
       <th class="header2">予約欄</th>
-      <th class="header2">映画開始時刻</th>
-      <th class="header2">映画終了</th>
       <th class="header2">スクリーン番号</th>
       <th class="header2">映画館</th>
     </tr>
@@ -34,10 +32,6 @@
         <td>
           <%= link_to "予約する", new_admin_reservation_path(id: movie.id) %>
         </td>
-        <% movie.schedules.each do |schedule| %>
-          <td><%= l schedule.start_time %></td>
-          <td><%= l schedule.end_time %></td>
-        <% end %>
         <td><%= movie.screen.screen %></td>
         <td><%= movie.theater.name %></td>
       </tr>
