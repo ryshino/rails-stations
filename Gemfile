@@ -71,3 +71,5 @@ gem 'email_validator'
 gem 'jquery-rails'
 
 gem 'whenever', require: false
+
+gem 'carrierwave', '~> 2.0'

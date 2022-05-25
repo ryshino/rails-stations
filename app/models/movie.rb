@@ -1,4 +1,6 @@
 class Movie < ApplicationRecord
+  mount_uploader :image_url, MoiveUploader
+
   has_many :schedules, dependent: :destroy
   has_many :rankings, dependent: :destroy
 

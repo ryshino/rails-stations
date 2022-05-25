@@ -32,3 +32,8 @@ table.row {
 table td.already_reservation {
   background-color: darkgray;
 }
+
+.image {
+  width: 80px;
+  height: 80px;
+}
