@@ -1,4 +1,7 @@
 FROM ruby:2.7.3
+
+ENV RAILS_ENV=production
+
 RUN apt-get update -qq
 RUN apt-get install -y nodejs npm postgresql-client imagemagick graphviz && npm install n -g && n lts
 RUN apt-get install -y cron
@@ -12,10 +15,14 @@ WORKDIR /app
 COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
 COPY . /app
-
+RUN bundle config --local set path 'vendor/bundle' \
+  && bundle install
+  
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
-CMD ["rails", "server", "-b", "0.0.0.0"]
+COPY start.sh /start.sh
+RUN chmod 744 /start.sh
+CMD ["sh", "/start.sh"] 
