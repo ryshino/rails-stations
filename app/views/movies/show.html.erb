@@ -62,16 +62,20 @@
       const movie_id = document.getElementById('movie_id').innerHTML;
       const select_date = document.getElementById("movie_date").value;
       const schedule_id = document.getElementById("movie_schedule_id").value;
-      window.location.href = `/movies/${movie_id}/schedules/${schedule_id}/sheets?date=`+  encodeURIComponent( select_date );
+      if (isNaN(schedule_id)) {
+        alert( 'スケジュールを選択してください' );
+      }else{
+        window.location.href = `/movies/${movie_id}/schedules/${schedule_id}/sheets?date=`+  encodeURIComponent( select_date );
+      }
     });
   });
 
   $(document).ready(function(){
-    // 劇場を選択
     $('#movie_date').change(function(){
       let date = $("#movie_date").val();
+      const movie_id = document.getElementById('movie_id').innerHTML;
       $.get("<%= movies_schedule_select_path %>",
-        { date: date },
+        { date: date, movie_id: movie_id },
         function(data){ }
       );
     });

@@ -10,8 +10,12 @@ class MoviesController < ApplicationController
 
   def schedule_select
     @date = params[:date]
-    @schedules = Schedule.where('start_time LIKE ?', "%#{@date}%").pluck(:start_time, :id)
-   if @schedules == []
+    @movie_id = params[:movie_id]
+    @movie = Movie.find(@movie_id)
+    @schedules = Schedule.where(movie_id: @movie.id)
+    @schedules = @schedules.where('start_time LIKE ?', "#{@date}%").pluck(:start_time, :id)
+    
+   if @schedules.blank?
     @schedules = ["選択可能なスケジュールがありません"]
    else 
      @schedules

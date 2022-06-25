@@ -42,7 +42,7 @@ class Admin::SchedulesController < ApplicationController
     @schedule = Schedule.find(params[:id])
 
     @schedule.destroy
-    flash[:notice] = '投稿を削除しました'
+    flash[:notice] = 'スケジュールを削除しました'
     redirect_to admin_schedules_path
   end
 

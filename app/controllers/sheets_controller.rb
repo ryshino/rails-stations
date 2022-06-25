@@ -18,5 +18,4 @@ class SheetsController < ApplicationController
 
   
   private
-  
 end
