@@ -23,12 +23,12 @@ class Admin::MoviesController < ApplicationController
     @movie = Movie.create(movie_params)
 
     if @movie.save
-      flash[:notice] = '投稿に成功しました'
+      flash[:notice] = '作成に成功しました'
       redirect_to admin_movies_path
     else
       @theaters = Theater.all
       @screens = Screen.all
-      flash.now[:alert] = '投稿に失敗しました'
+      flash.now[:alert] = '作成に失敗しました'
       render :new
     end
   end
@@ -58,7 +58,7 @@ class Admin::MoviesController < ApplicationController
     @movie = Movie.find(params[:id])
 
     @movie.destroy
-    flash[:notice] = '投稿を削除しました'
+    flash[:notice] = '映画を削除しました'
     redirect_to admin_movies_path
   end
 
