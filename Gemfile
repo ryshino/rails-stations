@@ -73,3 +73,5 @@ gem 'jquery-rails'
 gem 'whenever', require: false
 
 gem 'carrierwave', '~> 2.0'
+gem 'fog-aws'
+gem 'dotenv-rails'

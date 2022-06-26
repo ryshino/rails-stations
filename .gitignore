@@ -38,3 +38,5 @@ yarn-debug.log*
 # For techtrain clie
 .techtrain/config.toml
 /public/uploads
+
+/.env
