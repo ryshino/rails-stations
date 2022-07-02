@@ -5,13 +5,10 @@ class MoiveUploader < CarrierWave::Uploader::Base
 
   # Choose what kind of storage to use for this uploader:
   #storage :file
-
-  if Rails.env.development? # 開発環境の場合
-    storage :file
-  elsif Rails.env.test? # テスト環境の場合
-    storage :file
-  else # 本番環境の場合
-    storage :fog
+  if Rails.env.production?
+    storage :fog # 本番環境のみ
+  else
+    storage :file # 本番環境以外
   end
   
   # Override the directory where uploaded files will be stored.
