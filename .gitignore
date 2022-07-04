@@ -39,4 +39,4 @@ yarn-debug.log*
 .techtrain/config.toml
 /public/uploads
 
-/.env
+/.env.env
