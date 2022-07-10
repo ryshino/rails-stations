@@ -31,8 +31,7 @@
       <th class="header2">画像URL</th>
       <th class="header2">上映中</th>
       <th class="header2">映画館</th>
-      <th class="header2">登録日時</th>
-      <th class="header2">更新日時</th>
+      <th class="header2">レビュー</th>
     </tr>
   </thead>
   <tbody>
@@ -49,8 +48,7 @@
           <td>公開予定</td>
         <% end %>
         <td><%= movie.theater.name %></td>
-        <td><%= l movie.created_at %></td>
-        <td><%= l movie.updated_at %></td>
+        <td><%= link_to 'レビュー', new_movie_review_path(movie) %></td>
       </tr>
     <% end %>
   </tbody>

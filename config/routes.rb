@@ -28,9 +28,10 @@ Rails.application.routes.draw do
   get '/movies/schedule_select' => 'movies#schedule_select'
   
   resources :movies do
+    resources :reviews, only: [:index, :new, :create, :show]
     resources :schedules do
       resources :sheets, only: [:index]
-      resources :reservations, only: [:new,]
+      resources :reservations, only: [:new]
     end
   end
 
