@@ -50,6 +50,14 @@ class ReviewsController < ApplicationController
     end
   end
 
+  def destroy
+    @review = Review.find(params[:id])
+
+    @review.destroy
+    flash[:notice] = 'レビューを削除しました'
+    redirect_to movies_path
+  end
+
   private
 
   def review_params

@@ -6,6 +6,9 @@
     <div id="star-rate<%= review.id %>"></div>
     <% if review.user_id == current_user.id %>
       <%= link_to '編集する', edit_movie_review_path(@movie, review) %>
+      <%= link_to movie_review_path(@movie, review), method: :delete, data: {confirm: "本当に削除してよろしいですか？"} do %>
+        削除する
+      <% end %><br>
     <% end %>
     <script>
       $('#star-rate<%= review.id%>').empty();
