@@ -3,7 +3,10 @@
   <div class=card>
     <p>内容:<%= review.content %></p>
     <p>評価 :<%= review.score %>点</p>
-    <div id="star-rate<%= review.id %>"></div>    
+    <div id="star-rate<%= review.id %>"></div>
+    <% if review.user_id == current_user.id %>
+      <%= link_to '編集する', edit_movie_review_path(@movie, review) %>
+    <% end %>
     <script>
       $('#star-rate<%= review.id%>').empty();
       $('#star-rate<%= review.id%>').raty({

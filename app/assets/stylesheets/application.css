@@ -37,3 +37,8 @@ table td.already_reservation {
   width: 80px;
   height: 80px;
 }
+
+.card {
+  border: double;
+  width: 40%;
+}
