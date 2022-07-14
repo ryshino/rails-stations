@@ -1,4 +1,13 @@
 class ReviewsController < ApplicationController
+  def index
+    @movie = Movie.find(params[:movie_id])
+    if @movie.reviews.blank?
+      @reviews = 0
+    else
+      @reviews = @movie.reviews.all
+    end
+  end
+
   def new
     @review = Review.new
     @movie = Movie.find(params[:movie_id])

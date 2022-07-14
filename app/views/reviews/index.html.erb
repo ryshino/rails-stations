@@ -1,0 +1,21 @@
+<h1><%= @movie.name %>のレビュー一覧</h1>
+<% @reviews.each do |review|%>
+  <div class=card>
+    <p>内容:<%= review.content %></p>
+    <p>評価 :<%= review.score %>点</p>
+    <div id="star-rate<%= review.id %>"></div>    
+    <script>
+      $('#star-rate<%= review.id%>').empty();
+      $('#star-rate<%= review.id%>').raty({
+        size      : 36,
+        starOff   : '<%= asset_path('star-off.png') %>',
+        starOn    : '<%= asset_path('star-on.png') %>',
+        half      : false,
+        readOnly: true,
+        score: <%= review.score %>,
+      });
+    </script>
+  </div>
+<% end %>
+
+<%= link_to '映画一覧に戻る', movies_path %>
