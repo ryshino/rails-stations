@@ -1,0 +1,38 @@
+<%= form_with model: [@movie ,@review], url: {controller: 'reviews', action: 'create' }, local: true do |f| %>
+  <div class="field">
+  <div>
+    <%= f.label :content, "内容" %>
+    <%= f.text_area :content %>
+  </div>
+
+  <div class="form-group row" id="score">
+    <%= f.label :score,'評価 ', class:'col-md-3 col-form-label' %>
+    <%= f.hidden_field :score, id: :review_score %>
+  </div>
+
+  <div>
+    <%= f.hidden_field :user_id, value: @user.id %>
+  </div>
+
+  <div>
+    <%= f.hidden_field :movie_id, value: @movie.id %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+  </div>
+
+  <!-- 評価javascript -->
+  <script>
+  $('#score').empty();
+  $('#score').raty({
+    size     : 36,
+    starOff:  '<%= asset_path('star-off.png') %>',
+    starOn : '<%= asset_path('star-on.png') %>',
+
+    scoreName: 'review[score]',
+    half: false,
+  });
+  </script>
+
+<% end %>

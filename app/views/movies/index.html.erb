@@ -28,11 +28,11 @@
       <th class="header2">タイトル</th>
       <th class="header2">公開年</th>
       <th class="header2">概要</th>
-      <th class="header2">画像URL</th>
+      <th class="header2">画像</th>
       <th class="header2">上映中</th>
       <th class="header2">映画館</th>
-      <th class="header2">登録日時</th>
-      <th class="header2">更新日時</th>
+      <th class="header2">レビュー</th>
+      <th class="header2">件数</th>
     </tr>
   </thead>
   <tbody>
@@ -49,8 +49,18 @@
           <td>公開予定</td>
         <% end %>
         <td><%= movie.theater.name %></td>
-        <td><%= l movie.created_at %></td>
-        <td><%= l movie.updated_at %></td>
+        <% if movie.reviews.blank? %>
+          <td>レビューがありません</td>
+        <% else %>
+          <td>
+            <div class="average-review-rating" data-score=<%= movie.reviews.average(:score).round(2) %>></div>
+          </td>
+        <% end %>
+        <% if movie.reviews.count == 0 %>
+          <td>(<%= movie.reviews.count %>)</td>
+        <% else %>
+          <td><div><%= link_to "(#{movie.reviews.count})", movie_reviews_path(movie) %></div></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -63,3 +73,16 @@
   <div><%= link_to 'ログイン', new_user_session_path %></div>
   <div><%= link_to 'アカウント作成', users_new_path %></div>
 <% end %>
+
+<script  type="text/javascript">
+  $('.average-review-rating').empty();
+  $('.average-review-rating').raty({
+    readOnly: true,
+    starOn: "<%= asset_path('star-on.png') %>",
+    starOff: "<%= asset_path('star-off.png') %>",
+    starHalf: "<%= asset_path('star-half.png') %>",
+    score: function() {
+      return $(this).attr('data-score')
+    }
+  });
+</script>

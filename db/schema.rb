@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_20_012605) do
+ActiveRecord::Schema.define(version: 2022_07_07_230948) do
 
   create_table "admin_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -63,6 +63,17 @@ ActiveRecord::Schema.define(version: 2022_05_20_012605) do
     t.index ["schedule_id"], name: "fk_rails_c58adc1819"
     t.index ["sheet_id"], name: "fk_rails_211e0e56f3"
     t.index ["user_id"], name: "index_reservations_on_user_id"
+  end
+
+  create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "movie_id", null: false
+    t.string "content"
+    t.integer "score"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["movie_id"], name: "index_reviews_on_movie_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "schedules", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -118,6 +129,8 @@ ActiveRecord::Schema.define(version: 2022_05_20_012605) do
   add_foreign_key "reservations", "schedules"
   add_foreign_key "reservations", "sheets"
   add_foreign_key "reservations", "users"
+  add_foreign_key "reviews", "movies"
+  add_foreign_key "reviews", "users"
   add_foreign_key "schedules", "movies"
   add_foreign_key "screens", "theaters"
   add_foreign_key "sheets", "screens"

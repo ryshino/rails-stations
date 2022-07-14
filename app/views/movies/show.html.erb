@@ -5,8 +5,10 @@
       <th class="header2">タイトル</th>
       <th class="header2">公開年</th>
       <th class="header2">概要</th>
-      <th class="header2">画像URL</th>
+      <th class="header2">画像</th>
       <th class="header2">上映中</th>
+      <th class="header2">レビュー</th>
+      <th class="header2">件数</th>
     </tr>
   </thead>
   <tbody>
@@ -20,6 +22,14 @@
         <td>上映中</td>
       <% else %>
         <td>公開予定</td>
+      <% end %>
+      <td>
+        <div class="average-review-rating" data-score=<%= @average_review %>></div>
+      </td>
+      <% if @movie.reviews.count == 0 %>
+        <td>(<%= @movie.reviews.count %>)</td>
+      <% else %>
+        <td><div><%= link_to "(#{@movie.reviews.count})", movie_reviews_path(@movie) %></div></td>
       <% end %>
     </tr>
   </tbody>
@@ -79,5 +89,16 @@
         function(data){ }
       );
     });
+  });
+
+  $('.average-review-rating').empty();
+  $('.average-review-rating').raty({
+    readOnly: true,
+    starOn: "<%= asset_path('star-on.png') %>",
+    starOff: "<%= asset_path('star-off.png') %>",
+    starHalf: "<%= asset_path('star-half.png') %>",
+    score: function() {
+      return $(this).attr('data-score')
+    }
   });
 </script>

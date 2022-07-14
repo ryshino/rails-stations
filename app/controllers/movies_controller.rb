@@ -1,5 +1,4 @@
 class MoviesController < ApplicationController
-
   def index
     @search_params = movie_search_params
     @movies = Movie.search(@search_params)
@@ -31,6 +30,11 @@ class MoviesController < ApplicationController
     @movie = Movie.find(params[:id])
     @schedules = @movie.schedules
     @schedule = @movie.schedules.find_by(movie_id: @movie.id)
+    if @movie.reviews.blank?
+      @average_review = 0
+    else
+      @average_review = @movie.reviews.average(:score).round(2)
+    end
   end
 
   private

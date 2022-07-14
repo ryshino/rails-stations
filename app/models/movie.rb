@@ -3,6 +3,7 @@ class Movie < ApplicationRecord
 
   has_many :schedules, dependent: :destroy
   has_many :rankings, dependent: :destroy
+  has_many :reviews, dependent: :destroy
 
   belongs_to :screen
   belongs_to :theater
