@@ -68,8 +68,8 @@ ActiveRecord::Schema.define(version: 2022_07_07_230948) do
   create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "movie_id", null: false
-    t.string "content"
-    t.integer "score"
+    t.string "content", null: false
+    t.integer "score", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["movie_id"], name: "index_reviews_on_movie_id"

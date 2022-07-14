@@ -9,6 +9,7 @@
       <th class="header2">上映中</th>
       <th class="header2">レビュー</th>
       <th class="header2">件数</th>
+      <th class="header2"></th>
     </tr>
   </thead>
   <tbody>
@@ -31,6 +32,7 @@
       <% else %>
         <td><div><%= link_to "(#{@movie.reviews.count})", movie_reviews_path(@movie) %></div></td>
       <% end %>
+      <td><%= link_to 'レビューを書く', new_movie_review_path(@movie) %></td>
     </tr>
   </tbody>
 </table>

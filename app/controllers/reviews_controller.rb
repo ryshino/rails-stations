@@ -21,6 +21,7 @@ class ReviewsController < ApplicationController
      flash[:notice] = 'レビューを投稿しました'
      redirect_to movies_path
    else
+    @movie = Movie.find(params[:movie_id])
      @user = User.find_by(id: current_user.id)
      flash.now[:alert] = 'レビューが投稿できませんでした'
      render :new
