@@ -28,7 +28,7 @@ class MoviesController < ApplicationController
   
   def show
     @movie = Movie.find(params[:id])
-    @schedules = @movie.schedules
+    @schedules = @movie.schedules.order(start_time: "ASC")
     @schedule = @movie.schedules.find_by(movie_id: @movie.id)
     if @movie.reviews.blank?
       @average_review = 0

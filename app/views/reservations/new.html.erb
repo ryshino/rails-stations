@@ -31,8 +31,7 @@
   </div>
 
   <div>
-    <%= f.label :email, '後で非表示にする' %>
-    <%= f.text_field :user_id, value: @user.id %>
+    <%= f.hidden_field :user_id, value: @user.id %>
   </div>
 
 

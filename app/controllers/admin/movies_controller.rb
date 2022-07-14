@@ -35,7 +35,7 @@ class Admin::MoviesController < ApplicationController
 
   def edit
     @movie = Movie.find(params[:id])
-    @schedule = @movie.schedules.all
+    @schedules = @movie.schedules.order(start_time: "ASC")
     @theaters = Theater.all
     @screens = Screen.all
   end

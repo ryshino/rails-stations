@@ -48,7 +48,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @movie.schedules.each do |schedule| %>
+    <% @schedules.each do |schedule| %>
       <tr>
         <td><%= link_to schedule.id, edit_admin_schedule_path(schedule) %></td>
         <td><%= l schedule.start_time %></td>
@@ -62,7 +62,9 @@
 
 <%= link_to admin_movie_path(@movie), method: :delete, data: {confirm: "本当に削除してよろしいですか？"} do %>
   削除する
-<% end %>
+<% end %><br>
+
+<%= link_to "一覧画面に戻る", admin_movies_path %>
 
 <script type="text/javascript">
   $(document).ready(function(){
