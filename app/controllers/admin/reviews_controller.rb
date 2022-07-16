@@ -1,4 +1,6 @@
 class Admin::ReviewsController < ApplicationController
+  before_action :authenticate_admin_user!
+  
   def index
     @movie = Movie.find(params[:movie_id])
     if @movie.reviews.blank?

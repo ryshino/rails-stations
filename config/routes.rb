@@ -45,5 +45,6 @@ Rails.application.routes.draw do
     end
     resources :schedules
     resources :reservations, only: [:index, :new, :create, :show, :update, :destroy]
+    resources :users, only: [:index, :destroy]
   end
 end
