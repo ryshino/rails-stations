@@ -1,0 +1,25 @@
+ <table>
+  <thead>
+    <tr>
+      <th class="header1">ID</th>
+      <th class="header2">名前</th>
+      <th class="header2">email</th>
+      <th class="header2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to user.id %></td>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td>
+          <%= link_to admin_user_path(user), method: :delete, data: {confirm: "本当に削除してよろしいですか？"} do %>
+            削除する
+          <% end %>
+        </td>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "映画一覧画面に戻る", admin_movies_path %>
