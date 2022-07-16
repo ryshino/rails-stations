@@ -1,4 +1,6 @@
 class ReviewsController < ApplicationController
+  before_action :require_user_logged_in
+  
   def index
     @user = User.find_by(id: current_user.id)
     @movie = Movie.find(params[:movie_id])

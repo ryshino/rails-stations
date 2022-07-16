@@ -1,0 +1,24 @@
+<h1><%= @movie.name %>のレビュー一覧</h1>
+<% @reviews.each do |review|%>
+  <div class=card>
+    <p>内容:<%= review.content %></p>
+    <p>評価 :<%= review.score %>点</p>
+    <div id="star-rate<%= review.id %>"></div>
+    <%= link_to admin_movie_review_path(@movie, review), method: :delete, data: {confirm: "本当に削除してよろしいですか？"} do %>
+      削除する
+    <% end %>
+    <script>
+      $('#star-rate<%= review.id%>').empty();
+      $('#star-rate<%= review.id%>').raty({
+        size      : 36,
+        starOff   : '<%= asset_path('star-off.png') %>',
+        starOn    : '<%= asset_path('star-on.png') %>',
+        half      : false,
+        readOnly: true,
+        score: <%= review.score %>,
+      });
+    </script>
+  </div>
+<% end %>
+
+<%= link_to '映画一覧に戻る', admin_movies_path %>

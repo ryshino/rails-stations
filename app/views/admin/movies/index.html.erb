@@ -7,11 +7,11 @@
       <th class="header2">概要</th>
       <th class="header2">画像URL</th>
       <th class="header2">上映中</th>
-      <th class="header2">登録日時</th>
-      <th class="header2">更新日時</th>
       <th class="header2">予約欄</th>
       <th class="header2">スクリーン番号</th>
       <th class="header2">映画館</th>
+      <th class="header2">レビュー</th>
+      <th class="header2">件数</th>
     </tr>
   </thead>
   <tbody>
@@ -27,13 +27,23 @@
         <% else %>
           <td>公開予定</td>
         <% end %>
-        <td><%= l movie.created_at %></td>
-        <td><%= l movie.updated_at %></td>
         <td>
           <%= link_to "予約する", new_admin_reservation_path(id: movie.id) %>
         </td>
         <td><%= movie.screen.screen %></td>
         <td><%= movie.theater.name %></td>
+        <% if movie.reviews.blank? %>
+          <td>レビューがありません</td>
+        <% else %>
+          <td>
+            <div class="average-review-rating" data-score=<%= movie.reviews.average(:score).round(2) %>></div>
+          </td>
+        <% end %>
+        <% if movie.reviews.count == 0 %>
+          <td>(<%= movie.reviews.count %>)</td>
+        <% else %>
+          <td><div><%= link_to "(#{movie.reviews.count})", admin_movie_reviews_path(movie) %></div></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -42,3 +52,16 @@
 <%= link_to '新規作成', new_admin_movie_path %>
 <%= link_to 'ログアウト', destroy_admin_user_session_path %>
 <%= link_to '予約一覧へ', admin_reservations_path %>
+
+<script  type="text/javascript">
+  $('.average-review-rating').empty();
+  $('.average-review-rating').raty({
+    readOnly: true,
+    starOn: "<%= asset_path('star-on.png') %>",
+    starOff: "<%= asset_path('star-off.png') %>",
+    starHalf: "<%= asset_path('star-half.png') %>",
+    score: function() {
+      return $(this).attr('data-score')
+    }
+  });
+</script>
