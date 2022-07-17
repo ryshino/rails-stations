@@ -1,3 +1,32 @@
-<h1><%= @user.name %>のユーザーページ</h1>
+<h1><%= @user.name %>様のユーザーページ</h1>
+<table>
+  <thead>
+    <tr>
+      <th class="header1">予約日</th>
+      <th class="header2">時間</th>
+      <th class="header2">座席</th>
+      <th class="header2">作品名</th>
+      <th class="header2">画像</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @movies.each do |movie| %>
+      <% movie.schedules.each do |schedule| %>
+        <% schedule.reservations.each do |reservation| %>
+          <% if reservation.date.between?(Time.zone.now.beginning_of_day, Time.zone.now.since(7.days).end_of_day) %>
+            <tr>
+              <td><%= reservation.date %></td>
+              <td><%= l schedule.start_time %></td>
+              <td><%= reservation.sheet.column %></td>
+              <td><%= movie.name %></td>
+              <td><%= image_tag movie.image_url.url, class:'image' %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
 <div><%= link_to '映画一覧へ', movies_path %></div>
 <div><%= link_to 'ログアウト', destroy_user_session_path, method: :delete %></div>
