@@ -45,6 +45,7 @@
       <th class="header2">ID</th>
       <th class="header2">映画開始時刻</th>
       <th class="header2">映画終了時刻</th>
+      <th class="header2"></th>
     </tr>
   </thead>
   <tbody>
@@ -53,6 +54,11 @@
         <td><%= link_to schedule.id, edit_admin_schedule_path(schedule) %></td>
         <td><%= l schedule.start_time %></td>
         <td><%= l schedule.end_time %></td>
+        <td>
+          <%= link_to admin_schedule_path(schedule), method: :delete, data: {confirm: "本当に削除してよろしいですか？"} do %>
+            削除する
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

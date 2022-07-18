@@ -1,4 +1,7 @@
 <h1><%= @user.name %>様のユーザーページ</h1>
+<div><%= link_to '映画一覧へ', movies_path %></div>
+<div><%= link_to 'ログアウト', destroy_user_session_path, method: :delete %></div>
+
 <table>
   <thead>
     <tr>
@@ -27,6 +30,3 @@
     <% end %>
   </tbody>
 </table>
-
-<div><%= link_to '映画一覧へ', movies_path %></div>
-<div><%= link_to 'ログアウト', destroy_user_session_path, method: :delete %></div>
