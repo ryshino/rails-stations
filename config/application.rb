@@ -16,7 +16,8 @@ module App
     config.generators do |g|
       g.test_framework false
     end
-    config.time_zone = 'Asia/Tokyo'
+    config.time_zone = 'Tokyo'
+    config.active_record.default_timezone = :local
     config.i18n.default_locale = :ja
     # Configuration for the application, engines, and railties goes here.
     #
