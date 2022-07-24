@@ -7,7 +7,8 @@ class ReservationsController < ApplicationController
       @reservation = Reservation.new
       @movie = Movie.find(params[:movie_id])
       @sheet = Sheet.find(params[:sheet_id])
-      @schedule = params[:schedule_id]
+      @schedule_id = params[:schedule_id]
+      @schedule = Schedule.find_by(id: @schedule_id)
       @date = params[:date]
       @user = User.find_by(id: current_user.id) 
     end

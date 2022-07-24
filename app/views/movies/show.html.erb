@@ -49,8 +49,8 @@
     <% @schedules.each do |schedule| %>
       <tr>
         <td><%= schedule.id %></td>
-        <td><%=  schedule.start_time %></td>
-        <td><%=  schedule.end_time %></td>
+        <td><%= l schedule.start_time %></td>
+        <td><%= l schedule.end_time %></td>
       </tr>
     <% end %>
   </tbody>
