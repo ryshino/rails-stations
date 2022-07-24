@@ -7,13 +7,23 @@ class SheetsController < ApplicationController
     @date = params[:date]
     @reservations = Reservation.all
 
-   if @movie.screen_id == 1
-    @sheets = Sheet.where(screen_id: 1)
-   elsif @movie.screen_id == 2
-    @sheets = Sheet.where(screen_id: 2)
-   else
-    @sheets = Sheet.where(screen_id: 3)
-   end
+    if @movie.theater_id == 1
+      if @movie.screen_id == 1
+        @sheets = Sheet.where(screen_id: 1, theater_id: 1)
+        elsif @movie.screen_id == 2
+        @sheets = Sheet.where(screen_id: 2, theater_id: 1)
+        else
+        @sheets = Sheet.where(screen_id: 3, theater_id: 1)
+      end
+    else
+      if @movie.screen_id == 1
+        @sheets = Sheet.where(screen_id: 1, theater_id: 2)
+        elsif @movie.screen_id == 2
+        @sheets = Sheet.where(screen_id: 2, theater_id: 2)
+        else
+        @sheets = Sheet.where(screen_id: 3, theater_id: 2)
+      end
+    end
   end
 
   
