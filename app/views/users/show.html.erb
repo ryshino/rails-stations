@@ -16,14 +16,16 @@
     <% @movies.each do |movie| %>
       <% movie.schedules.each do |schedule| %>
         <% schedule.reservations.each do |reservation| %>
-          <% if reservation.date.between?(Time.zone.now.beginning_of_day, Time.zone.now.since(7.days).end_of_day) %>
-            <tr>
-              <td><%= reservation.date %></td>
-              <td><%= l schedule.start_time %></td>
-              <td><%= reservation.sheet.column %></td>
-              <td><%= movie.name %></td>
-              <td><%= image_tag movie.image_url.url, class:'image' %></td>
-            </tr>
+          <% if reservation.user_id == @user.id %>
+            <% if reservation.date.between?(Time.zone.now.beginning_of_day, Time.zone.now.since(7.days).end_of_day) %>
+              <tr>
+                <td><%= reservation.date %></td>
+                <td><%= l schedule.start_time %></td>
+                <td><%= reservation.sheet.column %></td>
+                <td><%= movie.name %></td>
+                <td><%= image_tag movie.image_url.url, class:'image' %></td>
+              </tr>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>
