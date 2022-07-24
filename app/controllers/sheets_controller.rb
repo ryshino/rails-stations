@@ -9,19 +9,31 @@ class SheetsController < ApplicationController
 
     if @movie.theater_id == 1
       if @movie.screen_id == 1
-        @sheets = Sheet.where(screen_id: 1, theater_id: 1)
-        elsif @movie.screen_id == 2
-        @sheets = Sheet.where(screen_id: 2, theater_id: 1)
-        else
-        @sheets = Sheet.where(screen_id: 3, theater_id: 1)
+        @sheets_a = Sheet.where(screen_id: 1, theater_id: 1, row: "a")
+        @sheets_b = Sheet.where(screen_id: 1, theater_id: 1, row: "b")
+        @sheets_c = Sheet.where(screen_id: 1, theater_id: 1, row: "c")
+      elsif @movie.screen_id == 2
+        @sheets_a = Sheet.where(screen_id: 2, theater_id: 1, row: "a")
+        @sheets_b = Sheet.where(screen_id: 2, theater_id: 1, row: "b")
+        @sheets_c = Sheet.where(screen_id: 2, theater_id: 1, row: "c")
+      else
+        @sheets_a = Sheet.where(screen_id: 3, theater_id: 1, row: "a")
+        @sheets_b = Sheet.where(screen_id: 3, theater_id: 1, row: "b")
+        @sheets_c = Sheet.where(screen_id: 3, theater_id: 1, row: "c")
       end
     else
       if @movie.screen_id == 1
-        @sheets = Sheet.where(screen_id: 1, theater_id: 2)
-        elsif @movie.screen_id == 2
-        @sheets = Sheet.where(screen_id: 2, theater_id: 2)
-        else
-        @sheets = Sheet.where(screen_id: 3, theater_id: 2)
+        @sheets_a = Sheet.where(screen_id: 1, theater_id: 2, row: "a")
+        @sheets_b = Sheet.where(screen_id: 1, theater_id: 2, row: "b")
+        @sheets_c = Sheet.where(screen_id: 1, theater_id: 2, row: "c")
+      elsif @movie.screen_id == 2
+        @sheets_a = Sheet.where(screen_id: 2, theater_id: 2, row: "a")
+        @sheets_b = Sheet.where(screen_id: 2, theater_id: 2, row: "b")
+        @sheets_c = Sheet.where(screen_id: 2, theater_id: 2, row: "c")
+      else
+        @sheets_a = Sheet.where(screen_id: 2, theater_id: 2, row: "a")
+        @sheets_b = Sheet.where(screen_id: 2, theater_id: 2, row: "b")
+        @sheets_c = Sheet.where(screen_id: 2, theater_id: 2, row: "c")
       end
     end
   end

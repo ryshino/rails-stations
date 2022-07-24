@@ -1,7 +1,7 @@
 <% if @movie.screen_id == 1 %>
-  <%= render partial: '1_sheets', locals: { sheets: @sheets } %>
+  <%= render partial: '1_sheets', locals: { sheets_a: @sheets_a, sheets_b: @sheets_b, sheets_c: @sheets_c } %>
 <% elsif @movie.screen_id == 2 %>
-  <%= render partial: '2_sheets', locals: { sheets: @sheets } %>
+  <%= render partial: '2_sheets', locals: { sheets_a: @sheets_a, sheets_b: @sheets_b, sheets_c: @sheets_c } %>
 <% else %>
-  <%= render partial: '3_sheets', locals: { sheets: @sheets } %>
+  <%= render partial: '3_sheets', locals: { sheets_a: @sheets_a, sheets_b: @sheets_b, sheets_c: @sheets_c } %>
 <% end %>

@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   post 'reservations/', to: 'reservations#create'
   get '/admin/movies/screen_select' => 'admin/movies#screen_select'
 
-
+  get '/admin' => 'admin/movies#index'
   namespace :admin do
     resources :movies do
       resources :reviews, only: [:index, :destroy]
