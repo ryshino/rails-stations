@@ -15,7 +15,7 @@ class Admin::SchedulesController < ApplicationController
 
     if @schedule.save
       flash[:notice] = '作成に成功しました'
-      redirect_to admin_schedules_path
+      redirect_to edit_admin_movie_path(@schedule.movie_id)
     else
       flash.now[:alert] = '作成に失敗しました'
       render :new
